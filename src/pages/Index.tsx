@@ -1,13 +1,71 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Hero } from "@/components/Hero";
+import { ProductCard } from "@/components/ProductCard";
+import { CategoryFilter } from "@/components/CategoryFilter";
+import { products, categories } from "@/data/products";
 
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredProducts = selectedCategory === "All"
+    ? products
+    : products.filter(product => product.category === selectedCategory);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen">
+      <Hero />
+      
+      <section className="py-20 px-4 bg-background">
+        <div className="container mx-auto">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold">
+              Explore Our Collection
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Premium tech for the modern mover. Every product designed with precision and style.
+            </p>
+          </div>
+
+          <div className="mb-12">
+            <CategoryFilter
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onCategoryChange={setSelectedCategory}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <div 
+                key={product.handle}
+                className="animate-in fade-in slide-in-from-bottom-4 duration-500"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-xl text-muted-foreground">
+                No products found in this category.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="py-20 px-4 bg-gradient-to-br from-primary to-primary-glow text-white">
+        <div className="container mx-auto text-center space-y-6">
+          <h2 className="text-4xl md:text-5xl font-bold">
+            Ready to Move Forward?
+          </h2>
+          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            Join thousands who trust RioShop for their tech lifestyle.
+          </p>
+        </div>
+      </section>
+    </main>
   );
 };
 
