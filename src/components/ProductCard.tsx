@@ -11,9 +11,17 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50">
       <div className="aspect-square bg-muted relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
-          <div className="text-6xl opacity-20">📱</div>
-        </div>
+        {product.image ? (
+          <img 
+            src={product.image} 
+            alt={product.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
+            <div className="text-6xl opacity-20">📱</div>
+          </div>
+        )}
         {product.tags[0] && (
           <Badge className="absolute top-3 left-3 bg-accent text-accent-foreground">
             {product.tags[0]}

@@ -12,6 +12,7 @@ export interface Product {
 }
 
 export const products: Product[] = [
+  // Mobile Tech
   {
     handle: "aero-mag-car-charger-mount",
     title: "AeroMag Car Charger Mount",
@@ -21,7 +22,8 @@ export const products: Product[] = [
     tags: ["charger"],
     costPrice: 18.00,
     price: 27.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_aero-mag-car-charger-mount_main.jpg"
   },
   {
     handle: "novalink-usb-c-fast-cable",
@@ -32,7 +34,8 @@ export const products: Product[] = [
     tags: ["usb cable"],
     costPrice: 12.00,
     price: 18.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_novalink-usb-c-cable_main.jpg"
   },
   {
     handle: "skycharge-20w-mini-power-brick",
@@ -43,7 +46,8 @@ export const products: Product[] = [
     tags: ["power brick"],
     costPrice: 15.00,
     price: 22.50,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_skycharge-power-brick_main.jpg"
   },
   {
     handle: "magnetic-snap-battery-pack-pro",
@@ -54,7 +58,8 @@ export const products: Product[] = [
     tags: ["battery pack"],
     costPrice: 20.00,
     price: 30.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_magnetic-battery-pack_main.jpg"
   },
   {
     handle: "luxegrip-anti-slip-phone-case",
@@ -65,7 +70,8 @@ export const products: Product[] = [
     tags: ["phone case"],
     costPrice: 10.00,
     price: 15.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_luxegrip-phone-case_main.jpg"
   },
   {
     handle: "puresound-bluetooth-earbuds",
@@ -76,8 +82,83 @@ export const products: Product[] = [
     tags: ["earbuds"],
     costPrice: 30.00,
     price: 45.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_puresound-earbuds_main.jpg"
   },
+  {
+    handle: "motionguard-camera-lens-protector",
+    title: "MotionGuard Camera Lens Protector",
+    description: "High-quality lens protector for smartphones. Clear, durable, and keeps camera lenses pristine while on the move.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["accessory"],
+    costPrice: 5.00,
+    price: 7.50,
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_lens-protector_main.jpg"
+  },
+  {
+    handle: "carbonshield-charging-dock",
+    title: "CarbonShield Charging Dock",
+    description: "Sleek carbon-finish charging dock. Supports multiple devices with minimal footprint and premium styling.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["dock"],
+    costPrice: 25.00,
+    price: 37.50,
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_charging-dock_main.jpg"
+  },
+  {
+    handle: "halo-glow-wireless-charging-pad",
+    title: "HaloGlow Wireless Charging Pad",
+    description: "Elegant wireless charging pad with fast charging support. Minimalist design with soft-glow LED indicators.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["charging pad"],
+    costPrice: 22.00,
+    price: 33.00,
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_wireless-charging-pad_main.jpg"
+  },
+  {
+    handle: "titan-power-bank-50k",
+    title: "Titan Power Bank 50K",
+    description: "High-capacity portable power bank with luxury finish. Rapid charge multiple devices seamlessly.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["power bank"],
+    costPrice: 40.00,
+    price: 60.00,
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_titan-power-bank_main.jpg"
+  },
+  {
+    handle: "starwave-magsafe-car-vent-mount",
+    title: "StarWave Magsafe Car Vent Mount",
+    description: "Premium MagSafe car mount with secure grip. Sleek metal finish, compatible with iPhone magnetic charging.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["car mount"],
+    costPrice: 18.00,
+    price: 27.00,
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_magsafe-mount_main.jpg"
+  },
+  {
+    handle: "airpod-case-carbon-pro",
+    title: "AirPod Case Carbon Pro",
+    description: "Luxury carbon-fiber finish protective case for AirPods. Sleek, durable, and minimalistic.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["accessory"],
+    costPrice: 8.00,
+    price: 12.00,
+    margin: "50%",
+    image: "/src/assets/products/mobile-tech_airpod-case_main.jpg"
+  },
+  
+  // Smart Home
   {
     handle: "homevision-mini-security-cam",
     title: "HomeVision Mini Security Cam",
@@ -87,7 +168,8 @@ export const products: Product[] = [
     tags: ["security camera"],
     costPrice: 40.00,
     price: 60.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/smart-home_security-cam_main.jpg"
   },
   {
     handle: "zenmotion-smart-diffuser",
@@ -98,7 +180,8 @@ export const products: Product[] = [
     tags: ["diffuser"],
     costPrice: 25.00,
     price: 37.50,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/smart-home_diffuser_main.jpg"
   },
   {
     handle: "luminap-strip-light-pro",
@@ -109,7 +192,8 @@ export const products: Product[] = [
     tags: ["led strip"],
     costPrice: 35.00,
     price: 52.50,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/smart-home_led-strip_main.jpg"
   },
   {
     handle: "airclean-mini-purifier",
@@ -120,8 +204,59 @@ export const products: Product[] = [
     tags: ["air purifier"],
     costPrice: 28.00,
     price: 42.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/smart-home_air-purifier_main.jpg"
   },
+  {
+    handle: "nightrunner-stair-motion-light",
+    title: "NightRunner Stair Motion Light",
+    description: "Smart motion-activated LED stair lights. Sleek, minimal, and designed for safety and style.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["motion light"],
+    costPrice: 18.00,
+    price: 27.00,
+    margin: "50%",
+    image: "/src/assets/products/smart-home_stair-lights_main.jpg"
+  },
+  {
+    handle: "brightwave-desk-lamp",
+    title: "BrightWave Desk Lamp",
+    description: "Luxury LED desk lamp with touch control, adjustable angles, and minimalist design.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["desk lamp"],
+    costPrice: 30.00,
+    price: 45.00,
+    margin: "50%",
+    image: "/src/assets/products/smart-home_desk-lamp_main.jpg"
+  },
+  {
+    handle: "smarttouch-wall-switch",
+    title: "SmartTouch Wall Switch",
+    description: "Smart wall switch with touch-sensitive controls and Wi-Fi integration. Sleek, modern design.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["wall switch"],
+    costPrice: 22.00,
+    price: 33.00,
+    margin: "50%",
+    image: "/src/assets/products/smart-home_wall-switch_main.jpg"
+  },
+  {
+    handle: "waveroom-led-corner-tower",
+    title: "WaveRoom LED Corner Tower",
+    description: "Luxury LED corner tower light with color control. Modern aesthetics with smart app integration.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["led tower"],
+    costPrice: 32.00,
+    price: 48.00,
+    margin: "50%",
+    image: "/src/assets/products/smart-home_led-tower_main.jpg"
+  },
+  
+  // Car Tech
   {
     handle: "roadvision-dash-cam",
     title: "RoadVision Dash Cam",
@@ -131,7 +266,8 @@ export const products: Product[] = [
     tags: ["dash cam"],
     costPrice: 50.00,
     price: 75.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/car-tech_dash-cam_main.jpg"
   },
   {
     handle: "smarttire-digital-inflator",
@@ -142,7 +278,8 @@ export const products: Product[] = [
     tags: ["tire inflator"],
     costPrice: 35.00,
     price: 52.50,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/car-tech_tire-inflator_main.jpg"
   },
   {
     handle: "hud-drive-head-display",
@@ -153,7 +290,8 @@ export const products: Product[] = [
     tags: ["HUD"],
     costPrice: 40.00,
     price: 60.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/car-tech_hud-display_main.jpg"
   },
   {
     handle: "jetport-wireless-car-charger",
@@ -164,7 +302,56 @@ export const products: Product[] = [
     tags: ["wireless charger"],
     costPrice: 30.00,
     price: 45.00,
-    margin: "50%"
+    margin: "50%",
+    image: "/src/assets/products/car-tech_wireless-charger_main.jpg"
+  },
+  {
+    handle: "blindspot-mirror-pro",
+    title: "BlindSpot Mirror Pro",
+    description: "Enhanced blind spot mirror for luxury vehicles. Sleek, high-quality materials, and improved safety.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["mirror"],
+    costPrice: 12.00,
+    price: 18.00,
+    margin: "50%",
+    image: "/src/assets/products/car-tech_blindspot-mirror_main.jpg"
+  },
+  {
+    handle: "motiongrip-steering-cover",
+    title: "MotionGrip Steering Cover",
+    description: "Premium leather steering cover with ergonomic grip. Modern design and enhanced control.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["steering cover"],
+    costPrice: 18.00,
+    price: 27.00,
+    margin: "50%",
+    image: "/src/assets/products/car-tech_steering-cover_main.jpg"
+  },
+  {
+    handle: "scentboost-car-diffuser",
+    title: "ScentBoost Car Diffuser",
+    description: "Luxury car diffuser with premium essential oils. Sleek design and discreet installation.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["car diffuser"],
+    costPrice: 22.00,
+    price: 33.00,
+    margin: "50%",
+    image: "/src/assets/products/car-tech_car-diffuser_main.jpg"
+  },
+  {
+    handle: "nightbeam-car-door-lights",
+    title: "NightBeam Car Door Lights",
+    description: "LED door lights for vehicles. Stylish safety upgrade with sleek design.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["led lights"],
+    costPrice: 18.00,
+    price: 27.00,
+    margin: "50%",
+    image: "/src/assets/products/car-tech_door-lights_main.jpg"
   },
 ];
 
