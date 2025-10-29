@@ -1,3 +1,23 @@
+// Import all product images
+import aeroMagChargerMount from "@/assets/products/mobile-tech_aero-mag-car-charger-mount_main.jpg";
+import novalinkUsbCable from "@/assets/products/mobile-tech_novalink-usb-c-cable_main.jpg";
+import skyChargePowerBrick from "@/assets/products/mobile-tech_skycharge-power-brick_main.jpg";
+import magneticBatteryPack from "@/assets/products/mobile-tech_magnetic-battery-pack_main.jpg";
+import luxeGripPhoneCase from "@/assets/products/mobile-tech_luxegrip-phone-case_main.jpg";
+import pureSoundEarbuds from "@/assets/products/mobile-tech_puresound-earbuds_main.jpg";
+import chargingDock from "@/assets/products/mobile-tech_charging-dock_main.jpg";
+import wirelessChargingPad from "@/assets/products/mobile-tech_wireless-charging-pad_main.jpg";
+import titanPowerBank from "@/assets/products/mobile-tech_titan-power-bank_main.jpg";
+import securityCam from "@/assets/products/smart-home_security-cam_main.jpg";
+import diffuser from "@/assets/products/smart-home_diffuser_main.jpg";
+import ledStrip from "@/assets/products/smart-home_led-strip_main.jpg";
+import airPurifier from "@/assets/products/smart-home_air-purifier_main.jpg";
+import deskLamp from "@/assets/products/smart-home_desk-lamp_main.jpg";
+import dashCam from "@/assets/products/car-tech_dash-cam_main.jpg";
+import tireInflator from "@/assets/products/car-tech_tire-inflator_main.jpg";
+import hudDisplay from "@/assets/products/car-tech_hud-display_main.jpg";
+import wirelessCharger from "@/assets/products/car-tech_wireless-charger_main.jpg";
+
 export interface Product {
   handle: string;
   title: string;
@@ -23,7 +43,7 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_aero-mag-car-charger-mount_main.jpg"
+    image: aeroMagChargerMount
   },
   {
     handle: "novalink-usb-c-fast-cable",
@@ -35,7 +55,7 @@ export const products: Product[] = [
     costPrice: 12.00,
     price: 18.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_novalink-usb-c-cable_main.jpg"
+    image: novalinkUsbCable
   },
   {
     handle: "skycharge-20w-mini-power-brick",
@@ -47,7 +67,7 @@ export const products: Product[] = [
     costPrice: 15.00,
     price: 22.50,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_skycharge-power-brick_main.jpg"
+    image: skyChargePowerBrick
   },
   {
     handle: "magnetic-snap-battery-pack-pro",
@@ -59,7 +79,7 @@ export const products: Product[] = [
     costPrice: 20.00,
     price: 30.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_magnetic-battery-pack_main.jpg"
+    image: magneticBatteryPack
   },
   {
     handle: "luxegrip-anti-slip-phone-case",
@@ -71,7 +91,7 @@ export const products: Product[] = [
     costPrice: 10.00,
     price: 15.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_luxegrip-phone-case_main.jpg"
+    image: luxeGripPhoneCase
   },
   {
     handle: "puresound-bluetooth-earbuds",
@@ -83,7 +103,7 @@ export const products: Product[] = [
     costPrice: 30.00,
     price: 45.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_puresound-earbuds_main.jpg"
+    image: pureSoundEarbuds
   },
   {
     handle: "motionguard-camera-lens-protector",
@@ -107,7 +127,7 @@ export const products: Product[] = [
     costPrice: 25.00,
     price: 37.50,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_charging-dock_main.jpg"
+    image: chargingDock
   },
   {
     handle: "halo-glow-wireless-charging-pad",
@@ -119,7 +139,7 @@ export const products: Product[] = [
     costPrice: 22.00,
     price: 33.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_wireless-charging-pad_main.jpg"
+    image: wirelessChargingPad
   },
   {
     handle: "titan-power-bank-50k",
@@ -131,7 +151,7 @@ export const products: Product[] = [
     costPrice: 40.00,
     price: 60.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_titan-power-bank_main.jpg"
+    image: titanPowerBank
   },
   {
     handle: "starwave-magsafe-car-vent-mount",
@@ -169,7 +189,7 @@ export const products: Product[] = [
     costPrice: 40.00,
     price: 60.00,
     margin: "50%",
-    image: "/src/assets/products/smart-home_security-cam_main.jpg"
+    image: securityCam
   },
   {
     handle: "zenmotion-smart-diffuser",
@@ -181,7 +201,7 @@ export const products: Product[] = [
     costPrice: 25.00,
     price: 37.50,
     margin: "50%",
-    image: "/src/assets/products/smart-home_diffuser_main.jpg"
+    image: diffuser
   },
   {
     handle: "luminap-strip-light-pro",
@@ -193,7 +213,7 @@ export const products: Product[] = [
     costPrice: 35.00,
     price: 52.50,
     margin: "50%",
-    image: "/src/assets/products/smart-home_led-strip_main.jpg"
+    image: ledStrip
   },
   {
     handle: "airclean-mini-purifier",
@@ -205,7 +225,7 @@ export const products: Product[] = [
     costPrice: 28.00,
     price: 42.00,
     margin: "50%",
-    image: "/src/assets/products/smart-home_air-purifier_main.jpg"
+    image: airPurifier
   },
   {
     handle: "nightrunner-stair-motion-light",
@@ -229,7 +249,7 @@ export const products: Product[] = [
     costPrice: 30.00,
     price: 45.00,
     margin: "50%",
-    image: "/src/assets/products/smart-home_desk-lamp_main.jpg"
+    image: deskLamp
   },
   {
     handle: "smarttouch-wall-switch",
@@ -267,7 +287,7 @@ export const products: Product[] = [
     costPrice: 50.00,
     price: 75.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_dash-cam_main.jpg"
+    image: dashCam
   },
   {
     handle: "smarttire-digital-inflator",
@@ -279,7 +299,7 @@ export const products: Product[] = [
     costPrice: 35.00,
     price: 52.50,
     margin: "50%",
-    image: "/src/assets/products/car-tech_tire-inflator_main.jpg"
+    image: tireInflator
   },
   {
     handle: "hud-drive-head-display",
@@ -291,7 +311,7 @@ export const products: Product[] = [
     costPrice: 40.00,
     price: 60.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_hud-display_main.jpg"
+    image: hudDisplay
   },
   {
     handle: "jetport-wireless-car-charger",
@@ -303,7 +323,7 @@ export const products: Product[] = [
     costPrice: 30.00,
     price: 45.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_wireless-charger_main.jpg"
+    image: wirelessCharger
   },
   {
     handle: "blindspot-mirror-pro",
