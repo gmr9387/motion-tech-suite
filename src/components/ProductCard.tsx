@@ -5,11 +5,12 @@ import { Product } from "@/data/products";
 
 interface ProductCardProps {
   product: Product;
+  onClick?: () => void;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50">
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50 cursor-pointer" onClick={onClick}>
       <div className="aspect-square bg-muted relative overflow-hidden">
         {product.image ? (
           <img 
@@ -52,8 +53,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <Button 
             size="sm"
             className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick?.();
+            }}
           >
-            View
+            View Details
           </Button>
         </div>
       </CardContent>

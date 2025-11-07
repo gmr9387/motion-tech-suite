@@ -2,10 +2,13 @@ import { useState } from "react";
 import { Hero } from "@/components/Hero";
 import { ProductCard } from "@/components/ProductCard";
 import { CategoryFilter } from "@/components/CategoryFilter";
-import { products, categories } from "@/data/products";
+import { ProductDetailDialog } from "@/components/ProductDetailDialog";
+import { products, categories, Product } from "@/data/products";
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const filteredProducts = selectedCategory === "All"
     ? products
@@ -40,10 +43,22 @@ const Index = () => {
                 key={product.handle}
                 className="animate-in fade-in slide-in-from-bottom-4 duration-500"
               >
-                <ProductCard product={product} />
+                <ProductCard 
+                  product={product}
+                  onClick={() => {
+                    setSelectedProduct(product);
+                    setIsDialogOpen(true);
+                  }}
+                />
               </div>
             ))}
           </div>
+          
+          <ProductDetailDialog
+            product={selectedProduct}
+            open={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+          />
 
           {filteredProducts.length === 0 && (
             <div className="text-center py-20">
