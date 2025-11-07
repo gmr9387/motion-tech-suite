@@ -8,15 +8,35 @@ import pureSoundEarbuds from "@/assets/products/mobile-tech_puresound-earbuds_ma
 import chargingDock from "@/assets/products/mobile-tech_charging-dock_main.jpg";
 import wirelessChargingPad from "@/assets/products/mobile-tech_wireless-charging-pad_main.jpg";
 import titanPowerBank from "@/assets/products/mobile-tech_titan-power-bank_main.jpg";
+import lensProtector from "@/assets/products/mobile-tech_lens-protector_main.jpg";
+import magsafeMount from "@/assets/products/mobile-tech_magsafe-mount_main.jpg";
+import airpodCase from "@/assets/products/mobile-tech_airpod-case_main.jpg";
+import gamingHeadphones from "@/assets/products/mobile-tech_gaming-headphones_main.jpg";
+import bluetoothSpeaker from "@/assets/products/mobile-tech_bluetooth-speaker_main.jpg";
+import phoneStand from "@/assets/products/mobile-tech_phone-stand_main.jpg";
+import screenProtector from "@/assets/products/mobile-tech_screen-protector_main.jpg";
 import securityCam from "@/assets/products/smart-home_security-cam_main.jpg";
 import diffuser from "@/assets/products/smart-home_diffuser_main.jpg";
 import ledStrip from "@/assets/products/smart-home_led-strip_main.jpg";
 import airPurifier from "@/assets/products/smart-home_air-purifier_main.jpg";
 import deskLamp from "@/assets/products/smart-home_desk-lamp_main.jpg";
+import stairLights from "@/assets/products/smart-home_stair-lights_main.jpg";
+import wallSwitch from "@/assets/products/smart-home_wall-switch_main.jpg";
+import ledTower from "@/assets/products/smart-home_led-tower_main.jpg";
+import smartDoorbell from "@/assets/products/smart-home_smart-doorbell_main.jpg";
+import smartBulbs from "@/assets/products/smart-home_smart-bulbs_main.jpg";
+import smartPlug from "@/assets/products/smart-home_smart-plug_main.jpg";
+import robotVacuum from "@/assets/products/smart-home_robot-vacuum_main.jpg";
 import dashCam from "@/assets/products/car-tech_dash-cam_main.jpg";
 import tireInflator from "@/assets/products/car-tech_tire-inflator_main.jpg";
 import hudDisplay from "@/assets/products/car-tech_hud-display_main.jpg";
 import wirelessCharger from "@/assets/products/car-tech_wireless-charger_main.jpg";
+import blindspotMirror from "@/assets/products/car-tech_blindspot-mirror_main.jpg";
+import steeringCover from "@/assets/products/car-tech_steering-cover_main.jpg";
+import carDiffuser from "@/assets/products/car-tech_car-diffuser_main.jpg";
+import doorLights from "@/assets/products/car-tech_door-lights_main.jpg";
+import floorMats from "@/assets/products/car-tech_floor-mats_main.jpg";
+import phoneHolder from "@/assets/products/car-tech_phone-holder_main.jpg";
 
 export interface Product {
   handle: string;
@@ -115,7 +135,7 @@ export const products: Product[] = [
     costPrice: 5.00,
     price: 7.50,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_lens-protector_main.jpg"
+    image: lensProtector
   },
   {
     handle: "carbonshield-charging-dock",
@@ -163,7 +183,7 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_magsafe-mount_main.jpg"
+    image: magsafeMount
   },
   {
     handle: "airpod-case-carbon-pro",
@@ -175,7 +195,55 @@ export const products: Product[] = [
     costPrice: 8.00,
     price: 12.00,
     margin: "50%",
-    image: "/src/assets/products/mobile-tech_airpod-case_main.jpg"
+    image: airpodCase
+  },
+  {
+    handle: "blaze-gaming-headphones",
+    title: "Blaze Gaming Headphones",
+    description: "Premium wireless gaming headphones with RGB lighting and immersive sound. Perfect for gamers and music lovers.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["headphones", "gaming"],
+    costPrice: 50.00,
+    price: 75.00,
+    margin: "50%",
+    image: gamingHeadphones
+  },
+  {
+    handle: "wave-bluetooth-speaker",
+    title: "Wave Bluetooth Speaker",
+    description: "Portable Bluetooth speaker with premium fabric wrap. Powerful sound in a compact design.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["speaker"],
+    costPrice: 35.00,
+    price: 52.50,
+    margin: "50%",
+    image: bluetoothSpeaker
+  },
+  {
+    handle: "altitude-phone-stand",
+    title: "Altitude Phone Stand",
+    description: "Adjustable aluminum phone stand with weighted base. Perfect for desk use and video calls.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["stand"],
+    costPrice: 20.00,
+    price: 30.00,
+    margin: "50%",
+    image: phoneStand
+  },
+  {
+    handle: "crystal-screen-protector-kit",
+    title: "Crystal Screen Protector Kit",
+    description: "Premium tempered glass screen protectors with easy installation kit. Crystal clear protection.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["screen protector"],
+    costPrice: 8.00,
+    price: 12.00,
+    margin: "50%",
+    image: screenProtector
   },
   
   // Smart Home
@@ -237,7 +305,7 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: "/src/assets/products/smart-home_stair-lights_main.jpg"
+    image: stairLights
   },
   {
     handle: "brightwave-desk-lamp",
@@ -261,7 +329,7 @@ export const products: Product[] = [
     costPrice: 22.00,
     price: 33.00,
     margin: "50%",
-    image: "/src/assets/products/smart-home_wall-switch_main.jpg"
+    image: wallSwitch
   },
   {
     handle: "waveroom-led-corner-tower",
@@ -273,7 +341,55 @@ export const products: Product[] = [
     costPrice: 32.00,
     price: 48.00,
     margin: "50%",
-    image: "/src/assets/products/smart-home_led-tower_main.jpg"
+    image: ledTower
+  },
+  {
+    handle: "visionsafe-smart-doorbell",
+    title: "VisionSafe Smart Doorbell",
+    description: "HD video doorbell with two-way audio and motion detection. Luxury finish with smart home integration.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["doorbell", "security"],
+    costPrice: 45.00,
+    price: 67.50,
+    margin: "50%",
+    image: smartDoorbell
+  },
+  {
+    handle: "colorshift-smart-bulbs-4pack",
+    title: "ColorShift Smart Bulbs (4-Pack)",
+    description: "RGB smart bulbs with voice control and app integration. Transform any room with millions of colors.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["smart bulbs", "lighting"],
+    costPrice: 28.00,
+    price: 42.00,
+    margin: "50%",
+    image: smartBulbs
+  },
+  {
+    handle: "energywatch-smart-plug",
+    title: "EnergyWatch Smart Plug",
+    description: "Compact smart plug with energy monitoring. Control devices remotely and track power usage.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["smart plug"],
+    costPrice: 12.00,
+    price: 18.00,
+    margin: "50%",
+    image: smartPlug
+  },
+  {
+    handle: "cleanpath-robot-vacuum",
+    title: "CleanPath Robot Vacuum",
+    description: "Premium robot vacuum with laser navigation and smart mapping. Luxury cleaning on autopilot.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["robot vacuum", "cleaning"],
+    costPrice: 180.00,
+    price: 270.00,
+    margin: "50%",
+    image: robotVacuum
   },
   
   // Car Tech
@@ -335,7 +451,7 @@ export const products: Product[] = [
     costPrice: 12.00,
     price: 18.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_blindspot-mirror_main.jpg"
+    image: blindspotMirror
   },
   {
     handle: "motiongrip-steering-cover",
@@ -347,7 +463,7 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_steering-cover_main.jpg"
+    image: steeringCover
   },
   {
     handle: "scentboost-car-diffuser",
@@ -359,7 +475,7 @@ export const products: Product[] = [
     costPrice: 22.00,
     price: 33.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_car-diffuser_main.jpg"
+    image: carDiffuser
   },
   {
     handle: "nightbeam-car-door-lights",
@@ -371,7 +487,31 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: "/src/assets/products/car-tech_door-lights_main.jpg"
+    image: doorLights
+  },
+  {
+    handle: "carbon-elite-floor-mats",
+    title: "Carbon Elite Floor Mats",
+    description: "Luxury car floor mats with carbon fiber pattern and premium stitching. Style meets protection.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["floor mats"],
+    costPrice: 45.00,
+    price: 67.50,
+    margin: "50%",
+    image: floorMats
+  },
+  {
+    handle: "grip-pro-phone-holder",
+    title: "Grip Pro Phone Holder",
+    description: "Universal car phone holder with suction cup and adjustable arm. Secure grip for any device.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["phone holder"],
+    costPrice: 15.00,
+    price: 22.50,
+    margin: "50%",
+    image: phoneHolder
   },
 ];
 
