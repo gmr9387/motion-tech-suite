@@ -49,6 +49,8 @@ export interface Product {
   costPrice: number;
   margin: string;
   image?: string;
+  colors?: string[];
+  sizes?: string[];
 }
 
 export const products: Product[] = [
@@ -111,7 +113,8 @@ export const products: Product[] = [
     costPrice: 10.00,
     price: 15.00,
     margin: "50%",
-    image: luxeGripPhoneCase
+    image: luxeGripPhoneCase,
+    colors: ["Black", "Navy", "Rose Gold", "White"]
   },
   {
     handle: "puresound-bluetooth-earbuds",
@@ -123,7 +126,8 @@ export const products: Product[] = [
     costPrice: 30.00,
     price: 45.00,
     margin: "50%",
-    image: pureSoundEarbuds
+    image: pureSoundEarbuds,
+    colors: ["Black", "White", "Space Gray"]
   },
   {
     handle: "motionguard-camera-lens-protector",
@@ -195,7 +199,8 @@ export const products: Product[] = [
     costPrice: 8.00,
     price: 12.00,
     margin: "50%",
-    image: airpodCase
+    image: airpodCase,
+    colors: ["Carbon Black", "Silver", "Rose Gold"]
   },
   {
     handle: "blaze-gaming-headphones",
@@ -207,7 +212,8 @@ export const products: Product[] = [
     costPrice: 50.00,
     price: 75.00,
     margin: "50%",
-    image: gamingHeadphones
+    image: gamingHeadphones,
+    colors: ["Black", "White", "Red"]
   },
   {
     handle: "wave-bluetooth-speaker",
@@ -281,7 +287,8 @@ export const products: Product[] = [
     costPrice: 35.00,
     price: 52.50,
     margin: "50%",
-    image: ledStrip
+    image: ledStrip,
+    sizes: ["5ft", "10ft", "16ft", "32ft"]
   },
   {
     handle: "airclean-mini-purifier",
@@ -463,7 +470,8 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: steeringCover
+    image: steeringCover,
+    colors: ["Black", "Brown", "Gray"]
   },
   {
     handle: "scentboost-car-diffuser",
@@ -499,7 +507,8 @@ export const products: Product[] = [
     costPrice: 45.00,
     price: 67.50,
     margin: "50%",
-    image: floorMats
+    image: floorMats,
+    colors: ["Black", "Gray", "Beige"]
   },
   {
     handle: "grip-pro-phone-holder",

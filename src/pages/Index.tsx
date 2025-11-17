@@ -54,11 +54,14 @@ const Index = () => {
             ))}
           </div>
           
-          <ProductDetailDialog
-            product={selectedProduct}
-            open={isDialogOpen}
-            onOpenChange={setIsDialogOpen}
-          />
+        <ProductDetailDialog
+          product={selectedProduct}
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+          onProductSelect={(product) => {
+            setSelectedProduct(product);
+          }}
+        />
 
           {filteredProducts.length === 0 && (
             <div className="text-center py-20">
