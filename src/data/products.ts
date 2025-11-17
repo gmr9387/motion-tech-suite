@@ -65,7 +65,8 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: aeroMagChargerMount
+    image: aeroMagChargerMount,
+    colors: ["Black", "Silver", "Midnight Blue"]
   },
   {
     handle: "novalink-usb-c-fast-cable",
@@ -77,7 +78,9 @@ export const products: Product[] = [
     costPrice: 12.00,
     price: 18.00,
     margin: "50%",
-    image: novalinkUsbCable
+    image: novalinkUsbCable,
+    colors: ["Black", "White", "Space Gray"],
+    sizes: ["3ft", "6ft", "10ft"]
   },
   {
     handle: "skycharge-20w-mini-power-brick",
@@ -89,7 +92,8 @@ export const products: Product[] = [
     costPrice: 15.00,
     price: 22.50,
     margin: "50%",
-    image: skyChargePowerBrick
+    image: skyChargePowerBrick,
+    colors: ["White", "Black", "Gray"]
   },
   {
     handle: "magnetic-snap-battery-pack-pro",
@@ -101,7 +105,9 @@ export const products: Product[] = [
     costPrice: 20.00,
     price: 30.00,
     margin: "50%",
-    image: magneticBatteryPack
+    image: magneticBatteryPack,
+    colors: ["Black", "White", "Navy Blue"],
+    sizes: ["5,000mAh", "10,000mAh", "20,000mAh"]
   },
   {
     handle: "luxegrip-anti-slip-phone-case",
@@ -151,7 +157,8 @@ export const products: Product[] = [
     costPrice: 25.00,
     price: 37.50,
     margin: "50%",
-    image: chargingDock
+    image: chargingDock,
+    colors: ["Carbon Black", "Silver", "White"]
   },
   {
     handle: "halo-glow-wireless-charging-pad",
@@ -163,7 +170,8 @@ export const products: Product[] = [
     costPrice: 22.00,
     price: 33.00,
     margin: "50%",
-    image: wirelessChargingPad
+    image: wirelessChargingPad,
+    colors: ["White", "Black", "Rose Gold"]
   },
   {
     handle: "titan-power-bank-50k",
@@ -175,7 +183,9 @@ export const products: Product[] = [
     costPrice: 40.00,
     price: 60.00,
     margin: "50%",
-    image: titanPowerBank
+    image: titanPowerBank,
+    colors: ["Black", "Silver", "Navy"],
+    sizes: ["20,000mAh", "30,000mAh", "50,000mAh"]
   },
   {
     handle: "starwave-magsafe-car-vent-mount",
@@ -187,7 +197,8 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: magsafeMount
+    image: magsafeMount,
+    colors: ["Black", "Silver", "Gunmetal"]
   },
   {
     handle: "airpod-case-carbon-pro",
@@ -225,7 +236,8 @@ export const products: Product[] = [
     costPrice: 35.00,
     price: 52.50,
     margin: "50%",
-    image: bluetoothSpeaker
+    image: bluetoothSpeaker,
+    colors: ["Black", "Gray", "Navy", "Forest Green"]
   },
   {
     handle: "altitude-phone-stand",
@@ -237,7 +249,8 @@ export const products: Product[] = [
     costPrice: 20.00,
     price: 30.00,
     margin: "50%",
-    image: phoneStand
+    image: phoneStand,
+    colors: ["Silver", "Black", "Rose Gold"]
   },
   {
     handle: "crystal-screen-protector-kit",
@@ -249,7 +262,8 @@ export const products: Product[] = [
     costPrice: 8.00,
     price: 12.00,
     margin: "50%",
-    image: screenProtector
+    image: screenProtector,
+    sizes: ["iPhone 14/15", "iPhone 14/15 Pro", "iPhone 14/15 Pro Max", "Samsung Galaxy"]
   },
   
   // Smart Home
@@ -263,7 +277,8 @@ export const products: Product[] = [
     costPrice: 40.00,
     price: 60.00,
     margin: "50%",
-    image: securityCam
+    image: securityCam,
+    colors: ["White", "Black"]
   },
   {
     handle: "zenmotion-smart-diffuser",
@@ -275,7 +290,8 @@ export const products: Product[] = [
     costPrice: 25.00,
     price: 37.50,
     margin: "50%",
-    image: diffuser
+    image: diffuser,
+    colors: ["White", "Bamboo", "Dark Wood"]
   },
   {
     handle: "luminap-strip-light-pro",
@@ -300,7 +316,8 @@ export const products: Product[] = [
     costPrice: 28.00,
     price: 42.00,
     margin: "50%",
-    image: airPurifier
+    image: airPurifier,
+    colors: ["White", "Gray", "Black"]
   },
   {
     handle: "nightrunner-stair-motion-light",
@@ -324,7 +341,8 @@ export const products: Product[] = [
     costPrice: 30.00,
     price: 45.00,
     margin: "50%",
-    image: deskLamp
+    image: deskLamp,
+    colors: ["White", "Black", "Silver"]
   },
   {
     handle: "smarttouch-wall-switch",
@@ -336,7 +354,8 @@ export const products: Product[] = [
     costPrice: 22.00,
     price: 33.00,
     margin: "50%",
-    image: wallSwitch
+    image: wallSwitch,
+    colors: ["White", "Black", "Gray"]
   },
   {
     handle: "waveroom-led-corner-tower",
@@ -348,7 +367,9 @@ export const products: Product[] = [
     costPrice: 32.00,
     price: 48.00,
     margin: "50%",
-    image: ledTower
+    image: ledTower,
+    colors: ["Black", "White"],
+    sizes: ["3ft", "5ft", "7ft"]
   },
   {
     handle: "visionsafe-smart-doorbell",
@@ -360,7 +381,8 @@ export const products: Product[] = [
     costPrice: 45.00,
     price: 67.50,
     margin: "50%",
-    image: smartDoorbell
+    image: smartDoorbell,
+    colors: ["Silver", "Black", "Bronze"]
   },
   {
     handle: "colorshift-smart-bulbs-4pack",
@@ -384,7 +406,8 @@ export const products: Product[] = [
     costPrice: 12.00,
     price: 18.00,
     margin: "50%",
-    image: smartPlug
+    image: smartPlug,
+    colors: ["White", "Black"]
   },
   {
     handle: "cleanpath-robot-vacuum",
@@ -396,7 +419,8 @@ export const products: Product[] = [
     costPrice: 180.00,
     price: 270.00,
     margin: "50%",
-    image: robotVacuum
+    image: robotVacuum,
+    colors: ["White", "Black", "Silver"]
   },
   
   // Car Tech
@@ -410,7 +434,8 @@ export const products: Product[] = [
     costPrice: 50.00,
     price: 75.00,
     margin: "50%",
-    image: dashCam
+    image: dashCam,
+    colors: ["Black", "Silver"]
   },
   {
     handle: "smarttire-digital-inflator",
@@ -422,7 +447,8 @@ export const products: Product[] = [
     costPrice: 35.00,
     price: 52.50,
     margin: "50%",
-    image: tireInflator
+    image: tireInflator,
+    colors: ["Black", "Red", "Silver"]
   },
   {
     handle: "hud-drive-head-display",
@@ -434,7 +460,8 @@ export const products: Product[] = [
     costPrice: 40.00,
     price: 60.00,
     margin: "50%",
-    image: hudDisplay
+    image: hudDisplay,
+    colors: ["Black", "Silver"]
   },
   {
     handle: "jetport-wireless-car-charger",
@@ -446,7 +473,8 @@ export const products: Product[] = [
     costPrice: 30.00,
     price: 45.00,
     margin: "50%",
-    image: wirelessCharger
+    image: wirelessCharger,
+    colors: ["Black", "Silver", "Carbon Fiber"]
   },
   {
     handle: "blindspot-mirror-pro",
@@ -483,7 +511,8 @@ export const products: Product[] = [
     costPrice: 22.00,
     price: 33.00,
     margin: "50%",
-    image: carDiffuser
+    image: carDiffuser,
+    colors: ["Black", "Silver", "Rose Gold"]
   },
   {
     handle: "nightbeam-car-door-lights",
@@ -495,7 +524,8 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: doorLights
+    image: doorLights,
+    colors: ["White", "Blue", "Red", "Amber"]
   },
   {
     handle: "carbon-elite-floor-mats",
@@ -520,7 +550,8 @@ export const products: Product[] = [
     costPrice: 15.00,
     price: 22.50,
     margin: "50%",
-    image: phoneHolder
+    image: phoneHolder,
+    colors: ["Black", "Silver", "Red"]
   },
 ];
 
