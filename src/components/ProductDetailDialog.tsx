@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Product, products } from "@/data/products";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/contexts/CartContext";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 
@@ -26,19 +27,21 @@ export const ProductDetailDialog = ({
   onProductSelect,
 }: ProductDetailDialogProps) => {
   const { toast } = useToast();
+  const { addToCart, setIsCartOpen } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-  if (!product) return null;
+  // Reset selections when product changes
+  useEffect(() => {
+    if (product) {
+      setQuantity(1);
+      setSelectedColor(product.colors?.[0] || null);
+      setSelectedSize(product.sizes?.[0] || null);
+    }
+  }, [product?.handle]);
 
-  // Set initial selections when product changes
-  if (product.colors && !selectedColor) {
-    setSelectedColor(product.colors[0]);
-  }
-  if (product.sizes && !selectedSize) {
-    setSelectedSize(product.sizes[0]);
-  }
+  if (!product) return null;
 
   // Get related products (same category, different product)
   const relatedProducts = products
@@ -52,18 +55,21 @@ export const ProductDetailDialog = ({
     }
   };
 
-  const handleBuyNow = () => {
+  const handleAddToCart = () => {
+    addToCart(product, quantity, selectedColor || undefined, selectedSize || undefined);
+    
     const variantInfo = [];
-    if (selectedColor) variantInfo.push(`Color: ${selectedColor}`);
-    if (selectedSize) variantInfo.push(`Size: ${selectedSize}`);
+    if (selectedColor) variantInfo.push(selectedColor);
+    if (selectedSize) variantInfo.push(selectedSize);
     const variantText = variantInfo.length > 0 ? ` (${variantInfo.join(", ")})` : "";
 
     toast({
       title: "Added to cart!",
       description: `${quantity}x ${product.title}${variantText} added to your cart.`,
     });
+    
     onOpenChange(false);
-    setQuantity(1);
+    setIsCartOpen(true);
   };
 
   const handleRelatedProductClick = (relatedProduct: Product) => {
@@ -188,7 +194,7 @@ export const ProductDetailDialog = ({
               <Button
                 size="lg"
                 className="w-full"
-                onClick={handleBuyNow}
+                onClick={handleAddToCart}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 Add to Cart
