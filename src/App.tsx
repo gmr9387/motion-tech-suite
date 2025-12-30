@@ -15,10 +15,10 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <CartProvider>
-        <Toaster />
-        <Sonner />
-        <CartDrawer />
         <BrowserRouter>
+          <Toaster />
+          <Sonner />
+          <CartDrawer />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/checkout" element={<Checkout />} />
