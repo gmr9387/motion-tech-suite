@@ -5,6 +5,8 @@ import { CategoryFilter } from "@/components/CategoryFilter";
 import { ProductDetailDialog } from "@/components/ProductDetailDialog";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Newsletter } from "@/components/Newsletter";
+import { ProductSorting, SortOption } from "@/components/ProductSorting";
 import { products, categories, Product } from "@/data/products";
 
 const Index = () => {
@@ -12,6 +14,7 @@ const Index = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState<SortOption>("featured");
 
   const filteredProducts = useMemo(() => {
     let result = products;
@@ -32,8 +35,36 @@ const Index = () => {
       );
     }
 
+    // Sort products
+    switch (sortOption) {
+      case "price-low":
+        result = [...result].sort((a, b) => a.price - b.price);
+        break;
+      case "price-high":
+        result = [...result].sort((a, b) => b.price - a.price);
+        break;
+      case "rating":
+        result = [...result].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        break;
+      case "newest":
+        result = [...result].sort((a, b) => {
+          if (a.isNew && !b.isNew) return -1;
+          if (!a.isNew && b.isNew) return 1;
+          return 0;
+        });
+        break;
+      case "featured":
+      default:
+        result = [...result].sort((a, b) => {
+          if (a.isBestseller && !b.isBestseller) return -1;
+          if (!a.isBestseller && b.isBestseller) return 1;
+          return 0;
+        });
+        break;
+    }
+
     return result;
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, sortOption]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -58,16 +89,17 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="mb-12">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <CategoryFilter
                 categories={categories}
                 selectedCategory={selectedCategory}
                 onCategoryChange={setSelectedCategory}
               />
+              <ProductSorting value={sortOption} onChange={setSortOption} />
             </div>
 
             {searchQuery && (
-              <p className="text-sm text-muted-foreground mb-6 text-center">
+              <p className="text-sm text-muted-foreground mb-6">
                 {filteredProducts.length} result{filteredProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
               </p>
             )}
@@ -110,6 +142,8 @@ const Index = () => {
             )}
           </div>
         </section>
+
+        <Newsletter />
 
         <section className="py-20 px-4 bg-gradient-to-br from-primary to-primary-glow text-white">
           <div className="container mx-auto text-center space-y-6">

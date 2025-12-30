@@ -15,6 +15,10 @@ import gamingHeadphones from "@/assets/products/mobile-tech_gaming-headphones_ma
 import bluetoothSpeaker from "@/assets/products/mobile-tech_bluetooth-speaker_main.jpg";
 import phoneStand from "@/assets/products/mobile-tech_phone-stand_main.jpg";
 import screenProtector from "@/assets/products/mobile-tech_screen-protector_main.jpg";
+import laptopStand from "@/assets/products/mobile-tech_laptop-stand_main.jpg";
+import fitnessTracker from "@/assets/products/mobile-tech_fitness-tracker_main.jpg";
+import webcam from "@/assets/products/mobile-tech_webcam_main.jpg";
+import wirelessKeyboard from "@/assets/products/mobile-tech_wireless-keyboard_main.jpg";
 import securityCam from "@/assets/products/smart-home_security-cam_main.jpg";
 import diffuser from "@/assets/products/smart-home_diffuser_main.jpg";
 import ledStrip from "@/assets/products/smart-home_led-strip_main.jpg";
@@ -27,6 +31,9 @@ import smartDoorbell from "@/assets/products/smart-home_smart-doorbell_main.jpg"
 import smartBulbs from "@/assets/products/smart-home_smart-bulbs_main.jpg";
 import smartPlug from "@/assets/products/smart-home_smart-plug_main.jpg";
 import robotVacuum from "@/assets/products/smart-home_robot-vacuum_main.jpg";
+import thermostat from "@/assets/products/smart-home_thermostat_main.jpg";
+import smartLock from "@/assets/products/smart-home_smart-lock_main.jpg";
+import smartBottle from "@/assets/products/smart-home_smart-bottle_main.jpg";
 import dashCam from "@/assets/products/car-tech_dash-cam_main.jpg";
 import tireInflator from "@/assets/products/car-tech_tire-inflator_main.jpg";
 import hudDisplay from "@/assets/products/car-tech_hud-display_main.jpg";
@@ -37,6 +44,9 @@ import carDiffuser from "@/assets/products/car-tech_car-diffuser_main.jpg";
 import doorLights from "@/assets/products/car-tech_door-lights_main.jpg";
 import floorMats from "@/assets/products/car-tech_floor-mats_main.jpg";
 import phoneHolder from "@/assets/products/car-tech_phone-holder_main.jpg";
+import backupCamera from "@/assets/products/car-tech_backup-camera_main.jpg";
+import interiorLights from "@/assets/products/car-tech_interior-lights_main.jpg";
+import jumpStarter from "@/assets/products/car-tech_jump-starter_main.jpg";
 
 export interface Product {
   handle: string;
@@ -51,6 +61,11 @@ export interface Product {
   image?: string;
   colors?: string[];
   sizes?: string[];
+  rating?: number;
+  reviewCount?: number;
+  originalPrice?: number;
+  isNew?: boolean;
+  isBestseller?: boolean;
 }
 
 export const products: Product[] = [
@@ -66,7 +81,10 @@ export const products: Product[] = [
     price: 27.00,
     margin: "50%",
     image: aeroMagChargerMount,
-    colors: ["Black", "Silver", "Midnight Blue"]
+    colors: ["Black", "Silver", "Midnight Blue"],
+    rating: 4.8,
+    reviewCount: 342,
+    isBestseller: true
   },
   {
     handle: "novalink-usb-c-fast-cable",
@@ -76,11 +94,14 @@ export const products: Product[] = [
     category: "Mobile Tech",
     tags: ["usb cable"],
     costPrice: 12.00,
-    price: 18.00,
+    price: 14.99,
+    originalPrice: 18.00,
     margin: "50%",
     image: novalinkUsbCable,
     colors: ["Black", "White", "Space Gray"],
-    sizes: ["3ft", "6ft", "10ft"]
+    sizes: ["3ft", "6ft", "10ft"],
+    rating: 4.6,
+    reviewCount: 891
   },
   {
     handle: "skycharge-20w-mini-power-brick",
@@ -93,7 +114,9 @@ export const products: Product[] = [
     price: 22.50,
     margin: "50%",
     image: skyChargePowerBrick,
-    colors: ["White", "Black", "Gray"]
+    colors: ["White", "Black", "Gray"],
+    rating: 4.7,
+    reviewCount: 567
   },
   {
     handle: "magnetic-snap-battery-pack-pro",
@@ -107,7 +130,10 @@ export const products: Product[] = [
     margin: "50%",
     image: magneticBatteryPack,
     colors: ["Black", "White", "Navy Blue"],
-    sizes: ["5,000mAh", "10,000mAh", "20,000mAh"]
+    sizes: ["5,000mAh", "10,000mAh", "20,000mAh"],
+    rating: 4.9,
+    reviewCount: 234,
+    isBestseller: true
   },
   {
     handle: "luxegrip-anti-slip-phone-case",
@@ -117,10 +143,13 @@ export const products: Product[] = [
     category: "Mobile Tech",
     tags: ["phone case"],
     costPrice: 10.00,
-    price: 15.00,
+    price: 11.99,
+    originalPrice: 15.00,
     margin: "50%",
     image: luxeGripPhoneCase,
-    colors: ["Black", "Navy", "Rose Gold", "White"]
+    colors: ["Black", "Navy", "Rose Gold", "White"],
+    rating: 4.5,
+    reviewCount: 1203
   },
   {
     handle: "puresound-bluetooth-earbuds",
@@ -133,7 +162,10 @@ export const products: Product[] = [
     price: 45.00,
     margin: "50%",
     image: pureSoundEarbuds,
-    colors: ["Black", "White", "Space Gray"]
+    colors: ["Black", "White", "Space Gray"],
+    rating: 4.7,
+    reviewCount: 678,
+    isNew: true
   },
   {
     handle: "motionguard-camera-lens-protector",
@@ -145,7 +177,9 @@ export const products: Product[] = [
     costPrice: 5.00,
     price: 7.50,
     margin: "50%",
-    image: lensProtector
+    image: lensProtector,
+    rating: 4.4,
+    reviewCount: 445
   },
   {
     handle: "carbonshield-charging-dock",
@@ -158,7 +192,9 @@ export const products: Product[] = [
     price: 37.50,
     margin: "50%",
     image: chargingDock,
-    colors: ["Carbon Black", "Silver", "White"]
+    colors: ["Carbon Black", "Silver", "White"],
+    rating: 4.8,
+    reviewCount: 312
   },
   {
     handle: "halo-glow-wireless-charging-pad",
@@ -168,10 +204,13 @@ export const products: Product[] = [
     category: "Mobile Tech",
     tags: ["charging pad"],
     costPrice: 22.00,
-    price: 33.00,
+    price: 24.99,
+    originalPrice: 33.00,
     margin: "50%",
     image: wirelessChargingPad,
-    colors: ["White", "Black", "Rose Gold"]
+    colors: ["White", "Black", "Rose Gold"],
+    rating: 4.6,
+    reviewCount: 523
   },
   {
     handle: "titan-power-bank-50k",
@@ -185,7 +224,10 @@ export const products: Product[] = [
     margin: "50%",
     image: titanPowerBank,
     colors: ["Black", "Silver", "Navy"],
-    sizes: ["20,000mAh", "30,000mAh", "50,000mAh"]
+    sizes: ["20,000mAh", "30,000mAh", "50,000mAh"],
+    rating: 4.9,
+    reviewCount: 189,
+    isBestseller: true
   },
   {
     handle: "starwave-magsafe-car-vent-mount",
@@ -198,7 +240,9 @@ export const products: Product[] = [
     price: 27.00,
     margin: "50%",
     image: magsafeMount,
-    colors: ["Black", "Silver", "Gunmetal"]
+    colors: ["Black", "Silver", "Gunmetal"],
+    rating: 4.7,
+    reviewCount: 267
   },
   {
     handle: "airpod-case-carbon-pro",
@@ -211,7 +255,9 @@ export const products: Product[] = [
     price: 12.00,
     margin: "50%",
     image: airpodCase,
-    colors: ["Carbon Black", "Silver", "Rose Gold"]
+    colors: ["Carbon Black", "Silver", "Rose Gold"],
+    rating: 4.5,
+    reviewCount: 834
   },
   {
     handle: "blaze-gaming-headphones",
@@ -221,10 +267,14 @@ export const products: Product[] = [
     category: "Mobile Tech",
     tags: ["headphones", "gaming"],
     costPrice: 50.00,
-    price: 75.00,
+    price: 59.99,
+    originalPrice: 75.00,
     margin: "50%",
     image: gamingHeadphones,
-    colors: ["Black", "White", "Red"]
+    colors: ["Black", "White", "Red"],
+    rating: 4.8,
+    reviewCount: 456,
+    isBestseller: true
   },
   {
     handle: "wave-bluetooth-speaker",
@@ -237,7 +287,9 @@ export const products: Product[] = [
     price: 52.50,
     margin: "50%",
     image: bluetoothSpeaker,
-    colors: ["Black", "Gray", "Navy", "Forest Green"]
+    colors: ["Black", "Gray", "Navy", "Forest Green"],
+    rating: 4.6,
+    reviewCount: 378
   },
   {
     handle: "altitude-phone-stand",
@@ -250,7 +302,9 @@ export const products: Product[] = [
     price: 30.00,
     margin: "50%",
     image: phoneStand,
-    colors: ["Silver", "Black", "Rose Gold"]
+    colors: ["Silver", "Black", "Rose Gold"],
+    rating: 4.7,
+    reviewCount: 245
   },
   {
     handle: "crystal-screen-protector-kit",
@@ -263,7 +317,73 @@ export const products: Product[] = [
     price: 12.00,
     margin: "50%",
     image: screenProtector,
-    sizes: ["iPhone 14/15", "iPhone 14/15 Pro", "iPhone 14/15 Pro Max", "Samsung Galaxy"]
+    sizes: ["iPhone 14/15", "iPhone 14/15 Pro", "iPhone 14/15 Pro Max", "Samsung Galaxy"],
+    rating: 4.4,
+    reviewCount: 1567
+  },
+  {
+    handle: "elevate-laptop-stand",
+    title: "Elevate Laptop Stand",
+    description: "Premium aluminum laptop stand with adjustable angles. Ergonomic design for comfortable work sessions.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["laptop stand", "desk"],
+    costPrice: 35.00,
+    price: 52.50,
+    margin: "50%",
+    image: laptopStand,
+    colors: ["Silver", "Space Gray", "Rose Gold"],
+    rating: 4.8,
+    reviewCount: 234,
+    isNew: true
+  },
+  {
+    handle: "pulse-fitness-tracker",
+    title: "Pulse Fitness Tracker",
+    description: "Smart fitness band with heart rate monitoring, sleep tracking, and water resistance. Stay connected on the move.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["fitness", "wearable"],
+    costPrice: 40.00,
+    price: 59.99,
+    margin: "50%",
+    image: fitnessTracker,
+    colors: ["Black", "Navy", "White"],
+    rating: 4.6,
+    reviewCount: 567,
+    isNew: true
+  },
+  {
+    handle: "clarity-4k-webcam",
+    title: "Clarity 4K Webcam",
+    description: "Professional 4K webcam with built-in ring light and auto-focus. Crystal clear video for streaming and calls.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["webcam", "streaming"],
+    costPrice: 55.00,
+    price: 82.50,
+    margin: "50%",
+    image: webcam,
+    colors: ["Black"],
+    rating: 4.9,
+    reviewCount: 189,
+    isBestseller: true
+  },
+  {
+    handle: "whisper-wireless-keyboard",
+    title: "Whisper Wireless Keyboard",
+    description: "Ultra-slim wireless keyboard with whisper-quiet keys and multi-device connectivity. Elegant design for modern desks.",
+    vendor: "Drive Mode",
+    category: "Mobile Tech",
+    tags: ["keyboard", "desk"],
+    costPrice: 45.00,
+    price: 67.50,
+    margin: "50%",
+    image: wirelessKeyboard,
+    colors: ["White", "Black", "Silver"],
+    rating: 4.7,
+    reviewCount: 312,
+    isNew: true
   },
   
   // Smart Home
@@ -278,7 +398,10 @@ export const products: Product[] = [
     price: 60.00,
     margin: "50%",
     image: securityCam,
-    colors: ["White", "Black"]
+    colors: ["White", "Black"],
+    rating: 4.7,
+    reviewCount: 445,
+    isBestseller: true
   },
   {
     handle: "zenmotion-smart-diffuser",
@@ -291,7 +414,9 @@ export const products: Product[] = [
     price: 37.50,
     margin: "50%",
     image: diffuser,
-    colors: ["White", "Bamboo", "Dark Wood"]
+    colors: ["White", "Bamboo", "Dark Wood"],
+    rating: 4.5,
+    reviewCount: 334
   },
   {
     handle: "luminap-strip-light-pro",
@@ -301,10 +426,13 @@ export const products: Product[] = [
     category: "Smart Home",
     tags: ["led strip"],
     costPrice: 35.00,
-    price: 52.50,
+    price: 39.99,
+    originalPrice: 52.50,
     margin: "50%",
     image: ledStrip,
-    sizes: ["5ft", "10ft", "16ft", "32ft"]
+    sizes: ["5ft", "10ft", "16ft", "32ft"],
+    rating: 4.6,
+    reviewCount: 789
   },
   {
     handle: "airclean-mini-purifier",
@@ -317,7 +445,9 @@ export const products: Product[] = [
     price: 42.00,
     margin: "50%",
     image: airPurifier,
-    colors: ["White", "Gray", "Black"]
+    colors: ["White", "Gray", "Black"],
+    rating: 4.8,
+    reviewCount: 223
   },
   {
     handle: "nightrunner-stair-motion-light",
@@ -329,7 +459,9 @@ export const products: Product[] = [
     costPrice: 18.00,
     price: 27.00,
     margin: "50%",
-    image: stairLights
+    image: stairLights,
+    rating: 4.4,
+    reviewCount: 156
   },
   {
     handle: "brightwave-desk-lamp",
@@ -342,7 +474,9 @@ export const products: Product[] = [
     price: 45.00,
     margin: "50%",
     image: deskLamp,
-    colors: ["White", "Black", "Silver"]
+    colors: ["White", "Black", "Silver"],
+    rating: 4.7,
+    reviewCount: 289
   },
   {
     handle: "smarttouch-wall-switch",
@@ -355,7 +489,9 @@ export const products: Product[] = [
     price: 33.00,
     margin: "50%",
     image: wallSwitch,
-    colors: ["White", "Black", "Gray"]
+    colors: ["White", "Black", "Gray"],
+    rating: 4.5,
+    reviewCount: 412
   },
   {
     handle: "waveroom-led-corner-tower",
@@ -369,7 +505,10 @@ export const products: Product[] = [
     margin: "50%",
     image: ledTower,
     colors: ["Black", "White"],
-    sizes: ["3ft", "5ft", "7ft"]
+    sizes: ["3ft", "5ft", "7ft"],
+    rating: 4.8,
+    reviewCount: 178,
+    isNew: true
   },
   {
     handle: "visionsafe-smart-doorbell",
@@ -382,7 +521,10 @@ export const products: Product[] = [
     price: 67.50,
     margin: "50%",
     image: smartDoorbell,
-    colors: ["Silver", "Black", "Bronze"]
+    colors: ["Silver", "Black", "Bronze"],
+    rating: 4.9,
+    reviewCount: 567,
+    isBestseller: true
   },
   {
     handle: "colorshift-smart-bulbs-4pack",
@@ -392,9 +534,12 @@ export const products: Product[] = [
     category: "Smart Home",
     tags: ["smart bulbs", "lighting"],
     costPrice: 28.00,
-    price: 42.00,
+    price: 34.99,
+    originalPrice: 42.00,
     margin: "50%",
-    image: smartBulbs
+    image: smartBulbs,
+    rating: 4.6,
+    reviewCount: 923
   },
   {
     handle: "energywatch-smart-plug",
@@ -407,7 +552,9 @@ export const products: Product[] = [
     price: 18.00,
     margin: "50%",
     image: smartPlug,
-    colors: ["White", "Black"]
+    colors: ["White", "Black"],
+    rating: 4.5,
+    reviewCount: 678
   },
   {
     handle: "cleanpath-robot-vacuum",
@@ -417,10 +564,62 @@ export const products: Product[] = [
     category: "Smart Home",
     tags: ["robot vacuum", "cleaning"],
     costPrice: 180.00,
-    price: 270.00,
+    price: 219.99,
+    originalPrice: 270.00,
     margin: "50%",
     image: robotVacuum,
-    colors: ["White", "Black", "Silver"]
+    colors: ["White", "Black", "Silver"],
+    rating: 4.9,
+    reviewCount: 345,
+    isBestseller: true
+  },
+  {
+    handle: "climate-smart-thermostat",
+    title: "Climate Smart Thermostat",
+    description: "Intelligent thermostat with learning capabilities and energy savings. Sleek round design with intuitive controls.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["thermostat", "climate"],
+    costPrice: 85.00,
+    price: 127.50,
+    margin: "50%",
+    image: thermostat,
+    colors: ["White", "Black"],
+    rating: 4.8,
+    reviewCount: 234,
+    isNew: true
+  },
+  {
+    handle: "securekey-smart-lock",
+    title: "SecureKey Smart Lock",
+    description: "Fingerprint and keypad smart lock with remote access. Premium security meets modern convenience.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["smart lock", "security"],
+    costPrice: 95.00,
+    price: 142.50,
+    margin: "50%",
+    image: smartLock,
+    colors: ["Black", "Silver", "Bronze"],
+    rating: 4.9,
+    reviewCount: 189,
+    isBestseller: true
+  },
+  {
+    handle: "hydro-smart-bottle",
+    title: "Hydro Smart Bottle",
+    description: "Smart water bottle with LED temperature display and hydration reminders. Stay healthy, stay stylish.",
+    vendor: "SafeTech",
+    category: "Smart Home",
+    tags: ["smart bottle", "health"],
+    costPrice: 25.00,
+    price: 37.50,
+    margin: "50%",
+    image: smartBottle,
+    colors: ["Black", "White", "Navy"],
+    rating: 4.5,
+    reviewCount: 267,
+    isNew: true
   },
   
   // Car Tech
@@ -435,7 +634,10 @@ export const products: Product[] = [
     price: 75.00,
     margin: "50%",
     image: dashCam,
-    colors: ["Black", "Silver"]
+    colors: ["Black", "Silver"],
+    rating: 4.7,
+    reviewCount: 423,
+    isBestseller: true
   },
   {
     handle: "smarttire-digital-inflator",
@@ -448,7 +650,9 @@ export const products: Product[] = [
     price: 52.50,
     margin: "50%",
     image: tireInflator,
-    colors: ["Black", "Red", "Silver"]
+    colors: ["Black", "Red", "Silver"],
+    rating: 4.6,
+    reviewCount: 289
   },
   {
     handle: "hud-drive-head-display",
@@ -458,10 +662,13 @@ export const products: Product[] = [
     category: "Car Tech",
     tags: ["HUD"],
     costPrice: 40.00,
-    price: 60.00,
+    price: 49.99,
+    originalPrice: 60.00,
     margin: "50%",
     image: hudDisplay,
-    colors: ["Black", "Silver"]
+    colors: ["Black", "Silver"],
+    rating: 4.5,
+    reviewCount: 178
   },
   {
     handle: "jetport-wireless-car-charger",
@@ -474,7 +681,9 @@ export const products: Product[] = [
     price: 45.00,
     margin: "50%",
     image: wirelessCharger,
-    colors: ["Black", "Silver", "Carbon Fiber"]
+    colors: ["Black", "Silver", "Carbon Fiber"],
+    rating: 4.8,
+    reviewCount: 345
   },
   {
     handle: "blindspot-mirror-pro",
@@ -486,7 +695,9 @@ export const products: Product[] = [
     costPrice: 12.00,
     price: 18.00,
     margin: "50%",
-    image: blindspotMirror
+    image: blindspotMirror,
+    rating: 4.4,
+    reviewCount: 567
   },
   {
     handle: "motiongrip-steering-cover",
@@ -499,7 +710,9 @@ export const products: Product[] = [
     price: 27.00,
     margin: "50%",
     image: steeringCover,
-    colors: ["Black", "Brown", "Gray"]
+    colors: ["Black", "Brown", "Gray"],
+    rating: 4.6,
+    reviewCount: 234
   },
   {
     handle: "scentboost-car-diffuser",
@@ -512,7 +725,9 @@ export const products: Product[] = [
     price: 33.00,
     margin: "50%",
     image: carDiffuser,
-    colors: ["Black", "Silver", "Rose Gold"]
+    colors: ["Black", "Silver", "Rose Gold"],
+    rating: 4.5,
+    reviewCount: 312
   },
   {
     handle: "nightbeam-car-door-lights",
@@ -522,10 +737,13 @@ export const products: Product[] = [
     category: "Car Tech",
     tags: ["led lights"],
     costPrice: 18.00,
-    price: 27.00,
+    price: 21.99,
+    originalPrice: 27.00,
     margin: "50%",
     image: doorLights,
-    colors: ["White", "Blue", "Red", "Amber"]
+    colors: ["White", "Blue", "Red", "Amber"],
+    rating: 4.4,
+    reviewCount: 445
   },
   {
     handle: "carbon-elite-floor-mats",
@@ -538,7 +756,9 @@ export const products: Product[] = [
     price: 67.50,
     margin: "50%",
     image: floorMats,
-    colors: ["Black", "Gray", "Beige"]
+    colors: ["Black", "Gray", "Beige"],
+    rating: 4.7,
+    reviewCount: 189
   },
   {
     handle: "grip-pro-phone-holder",
@@ -551,7 +771,56 @@ export const products: Product[] = [
     price: 22.50,
     margin: "50%",
     image: phoneHolder,
-    colors: ["Black", "Silver", "Red"]
+    colors: ["Black", "Silver", "Red"],
+    rating: 4.5,
+    reviewCount: 678
+  },
+  {
+    handle: "rearvision-backup-camera",
+    title: "RearVision Backup Camera",
+    description: "HD backup camera with wide-angle lens and night vision. Easy installation, enhanced safety.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["backup camera", "safety"],
+    costPrice: 35.00,
+    price: 52.50,
+    margin: "50%",
+    image: backupCamera,
+    colors: ["Black"],
+    rating: 4.6,
+    reviewCount: 234,
+    isNew: true
+  },
+  {
+    handle: "ambient-interior-led-kit",
+    title: "Ambient Interior LED Kit",
+    description: "RGB interior lighting kit with app control. Transform your car's interior with dynamic colors.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["interior lights", "led"],
+    costPrice: 28.00,
+    price: 42.00,
+    margin: "50%",
+    image: interiorLights,
+    rating: 4.7,
+    reviewCount: 345,
+    isNew: true
+  },
+  {
+    handle: "powerboost-jump-starter",
+    title: "PowerBoost Jump Starter",
+    description: "Portable jump starter with 20000mAh capacity. Start your car and charge devices on the go.",
+    vendor: "Drive Mode",
+    category: "Car Tech",
+    tags: ["jump starter", "power bank"],
+    costPrice: 55.00,
+    price: 82.50,
+    margin: "50%",
+    image: jumpStarter,
+    colors: ["Black", "Red"],
+    rating: 4.9,
+    reviewCount: 178,
+    isBestseller: true
   },
 ];
 
