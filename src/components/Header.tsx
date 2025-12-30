@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ShoppingCart, Search, Menu, X } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 import { categories } from '@/data/products';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +21,7 @@ export const Header = ({
   onSearchChange 
 }: HeaderProps) => {
   const { totalItems, setIsCartOpen } = useCart();
+  const { wishlistCount } = useWishlist();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -86,6 +88,20 @@ export const Header = ({
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
               <Search className="h-5 w-5" />
+            </Button>
+
+            {/* Wishlist Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative hidden sm:flex"
+            >
+              <Heart className="h-5 w-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs font-bold flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
             </Button>
 
             {/* Cart Button */}
