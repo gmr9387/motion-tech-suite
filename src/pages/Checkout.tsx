@@ -9,12 +9,26 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
 
+interface FormErrors {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  cardNumber?: string;
+  expiry?: string;
+  cvv?: string;
+}
+
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const [formData, setFormData] = useState({
     email: '',
@@ -29,13 +43,129 @@ const Checkout = () => {
     cvv: '',
   });
 
+  const formatCardNumber = (value: string) => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const matches = v.match(/\d{4,16}/g);
+    const match = (matches && matches[0]) || '';
+    const parts = [];
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+    return parts.length ? parts.join(' ') : v;
+  };
+
+  const formatExpiry = (value: string) => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    if (v.length >= 2) {
+      return v.substring(0, 2) + '/' + v.substring(2, 4);
+    }
+    return v;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    let formattedValue = value;
+
+    if (name === 'cardNumber') {
+      formattedValue = formatCardNumber(value);
+    } else if (name === 'expiry') {
+      formattedValue = formatExpiry(value);
+    } else if (name === 'cvv') {
+      formattedValue = value.replace(/[^0-9]/g, '').substring(0, 4);
+    } else if (name === 'zipCode') {
+      formattedValue = value.replace(/[^0-9-]/g, '').substring(0, 10);
+    }
+
+    setFormData(prev => ({ ...prev, [name]: formattedValue }));
+    
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+
+    // Name validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+
+    // Address validation
+    if (!formData.address.trim()) {
+      newErrors.address = 'Address is required';
+    }
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required';
+    }
+    if (!formData.state.trim()) {
+      newErrors.state = 'State is required';
+    }
+    if (!formData.zipCode.trim()) {
+      newErrors.zipCode = 'ZIP code is required';
+    } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
+      newErrors.zipCode = 'Enter a valid ZIP code';
+    }
+
+    // Card validation
+    const cardDigits = formData.cardNumber.replace(/\s/g, '');
+    if (!cardDigits) {
+      newErrors.cardNumber = 'Card number is required';
+    } else if (cardDigits.length < 15 || cardDigits.length > 16) {
+      newErrors.cardNumber = 'Enter a valid card number';
+    }
+
+    // Expiry validation
+    if (!formData.expiry) {
+      newErrors.expiry = 'Expiry is required';
+    } else {
+      const [month, year] = formData.expiry.split('/');
+      const now = new Date();
+      const currentYear = now.getFullYear() % 100;
+      const currentMonth = now.getMonth() + 1;
+      
+      if (!month || !year || parseInt(month) < 1 || parseInt(month) > 12) {
+        newErrors.expiry = 'Invalid expiry date';
+      } else if (parseInt(year) < currentYear || (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
+        newErrors.expiry = 'Card has expired';
+      }
+    }
+
+    // CVV validation
+    if (!formData.cvv) {
+      newErrors.cvv = 'CVV is required';
+    } else if (formData.cvv.length < 3) {
+      newErrors.cvv = 'Enter a valid CVV';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      toast({
+        title: "Please fix the errors",
+        description: "Some fields need your attention.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsProcessing(true);
 
     // Simulate order processing
@@ -89,6 +219,28 @@ const Checkout = () => {
     );
   }
 
+  const InputWithError = ({ 
+    id, 
+    label, 
+    error, 
+    ...props 
+  }: { 
+    id: string; 
+    label: string; 
+    error?: string; 
+  } & React.InputHTMLAttributes<HTMLInputElement>) => (
+    <div className="space-y-1">
+      <Label htmlFor={id}>{label}</Label>
+      <Input
+        id={id}
+        name={id}
+        className={error ? 'border-destructive focus-visible:ring-destructive' : ''}
+        {...props}
+      />
+      {error && <p className="text-xs text-destructive">{error}</p>}
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -114,20 +266,15 @@ const Checkout = () => {
                   <CardTitle className="text-lg">Contact Information</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                  </div>
+                  <InputWithError
+                    id="email"
+                    label="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="your@email.com"
+                    error={errors.email}
+                  />
                 </CardContent>
               </Card>
 
@@ -142,69 +289,52 @@ const Checkout = () => {
                 <CardContent>
                   <div className="grid gap-4">
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input
-                          id="firstName"
-                          name="firstName"
-                          required
-                          value={formData.firstName}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input
-                          id="lastName"
-                          name="lastName"
-                          required
-                          value={formData.lastName}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label htmlFor="address">Address</Label>
-                      <Input
-                        id="address"
-                        name="address"
-                        required
-                        value={formData.address}
+                      <InputWithError
+                        id="firstName"
+                        label="First Name"
+                        value={formData.firstName}
                         onChange={handleInputChange}
-                        placeholder="123 Main St"
+                        error={errors.firstName}
+                      />
+                      <InputWithError
+                        id="lastName"
+                        label="Last Name"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        error={errors.lastName}
                       />
                     </div>
+                    <InputWithError
+                      id="address"
+                      label="Address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      placeholder="123 Main St"
+                      error={errors.address}
+                    />
                     <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="city">City</Label>
-                        <Input
-                          id="city"
-                          name="city"
-                          required
-                          value={formData.city}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="state">State</Label>
-                        <Input
-                          id="state"
-                          name="state"
-                          required
-                          value={formData.state}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="zipCode">ZIP</Label>
-                        <Input
-                          id="zipCode"
-                          name="zipCode"
-                          required
-                          value={formData.zipCode}
-                          onChange={handleInputChange}
-                        />
-                      </div>
+                      <InputWithError
+                        id="city"
+                        label="City"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        error={errors.city}
+                      />
+                      <InputWithError
+                        id="state"
+                        label="State"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        error={errors.state}
+                      />
+                      <InputWithError
+                        id="zipCode"
+                        label="ZIP"
+                        value={formData.zipCode}
+                        onChange={handleInputChange}
+                        placeholder="12345"
+                        error={errors.zipCode}
+                      />
                     </div>
                   </div>
                 </CardContent>
@@ -220,40 +350,34 @@ const Checkout = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-4">
-                    <div>
-                      <Label htmlFor="cardNumber">Card Number</Label>
-                      <Input
-                        id="cardNumber"
-                        name="cardNumber"
-                        required
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        placeholder="1234 5678 9012 3456"
-                      />
-                    </div>
+                    <InputWithError
+                      id="cardNumber"
+                      label="Card Number"
+                      value={formData.cardNumber}
+                      onChange={handleInputChange}
+                      placeholder="1234 5678 9012 3456"
+                      maxLength={19}
+                      error={errors.cardNumber}
+                    />
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="expiry">Expiry Date</Label>
-                        <Input
-                          id="expiry"
-                          name="expiry"
-                          required
-                          value={formData.expiry}
-                          onChange={handleInputChange}
-                          placeholder="MM/YY"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="cvv">CVV</Label>
-                        <Input
-                          id="cvv"
-                          name="cvv"
-                          required
-                          value={formData.cvv}
-                          onChange={handleInputChange}
-                          placeholder="123"
-                        />
-                      </div>
+                      <InputWithError
+                        id="expiry"
+                        label="Expiry Date"
+                        value={formData.expiry}
+                        onChange={handleInputChange}
+                        placeholder="MM/YY"
+                        maxLength={5}
+                        error={errors.expiry}
+                      />
+                      <InputWithError
+                        id="cvv"
+                        label="CVV"
+                        value={formData.cvv}
+                        onChange={handleInputChange}
+                        placeholder="123"
+                        maxLength={4}
+                        error={errors.cvv}
+                      />
                     </div>
                   </div>
                 </CardContent>
