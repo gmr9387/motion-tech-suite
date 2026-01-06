@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Newsletter } from "@/components/Newsletter";
 import { ProductSorting, SortOption } from "@/components/ProductSorting";
+import { SEO } from "@/components/SEO";
 import { products, categories, Product } from "@/data/products";
 
 const Index = () => {
@@ -68,6 +69,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO />
       <Header
         onCategorySelect={setSelectedCategory}
         selectedCategory={selectedCategory}

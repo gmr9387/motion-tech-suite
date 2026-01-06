@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { ShoppingCart, Search, Menu, X, Heart } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Heart, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { categories } from '@/data/products';
 import { cn } from '@/lib/utils';
 
@@ -22,6 +23,7 @@ export const Header = ({
 }: HeaderProps) => {
   const { totalItems, setIsCartOpen } = useCart();
   const { wishlistCount } = useWishlist();
+  const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -90,11 +92,26 @@ export const Header = ({
               <Search className="h-5 w-5" />
             </Button>
 
+            {/* Theme Toggle */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="hidden sm:flex"
+            >
+              {theme === 'light' ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5" />
+              )}
+            </Button>
+
             {/* Wishlist Button */}
             <Button
               variant="ghost"
               size="icon"
               className="relative hidden sm:flex"
+              onClick={() => window.location.href = '/wishlist'}
             >
               <Heart className="h-5 w-5" />
               {wishlistCount > 0 && (

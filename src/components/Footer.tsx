@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
@@ -10,7 +11,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold">RioShop</h3>
+            <Link to="/" className="text-2xl font-bold hover:opacity-80 transition-opacity">
+              RioShop
+            </Link>
             <p className="text-primary-foreground/80 text-sm">
               Premium tech for the modern mover. Built for bold movement, designed with precision and style.
             </p>
@@ -34,12 +37,11 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-lg">Shop</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><a href="#products" className="hover:text-accent transition-colors">All Products</a></li>
-              <li><a href="#products" className="hover:text-accent transition-colors">Mobile Tech</a></li>
-              <li><a href="#products" className="hover:text-accent transition-colors">Smart Home</a></li>
-              <li><a href="#products" className="hover:text-accent transition-colors">Car Tech</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">New Arrivals</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Best Sellers</a></li>
+              <li><Link to="/#products" className="hover:text-accent transition-colors">All Products</Link></li>
+              <li><Link to="/#products" className="hover:text-accent transition-colors">Mobile Tech</Link></li>
+              <li><Link to="/#products" className="hover:text-accent transition-colors">Smart Home</Link></li>
+              <li><Link to="/#products" className="hover:text-accent transition-colors">Car Tech</Link></li>
+              <li><Link to="/wishlist" className="hover:text-accent transition-colors">My Wishlist</Link></li>
             </ul>
           </div>
 
@@ -47,11 +49,10 @@ export const Footer = () => {
           <div className="space-y-4">
             <h4 className="font-semibold text-lg">Support</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><a href="#" className="hover:text-accent transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Shipping Info</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Returns & Exchanges</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Track Order</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Contact Us</a></li>
+              <li><Link to="/faq" className="hover:text-accent transition-colors">FAQ</Link></li>
+              <li><Link to="/shipping" className="hover:text-accent transition-colors">Shipping Info</Link></li>
+              <li><Link to="/returns" className="hover:text-accent transition-colors">Returns & Exchanges</Link></li>
+              <li><Link to="/contact" className="hover:text-accent transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -88,9 +89,8 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
           <p>© {currentYear} RioShop. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-accent transition-colors">Cookie Policy</a>
+            <Link to="/faq" className="hover:text-accent transition-colors">Privacy Policy</Link>
+            <Link to="/faq" className="hover:text-accent transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

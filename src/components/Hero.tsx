@@ -27,6 +27,10 @@ export const Hero = () => {
               size="lg"
               variant="secondary"
               className="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90 shadow-lg"
+              onClick={() => {
+                const productsSection = document.getElementById('products');
+                productsSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               Explore Products
             </Button>
@@ -34,6 +38,15 @@ export const Hero = () => {
               size="lg"
               variant="outline"
               className="text-lg px-8 py-6 border-2 border-white text-white hover:bg-white/10"
+              onClick={() => {
+                const aboutSection = document.getElementById('about');
+                if (aboutSection) {
+                  aboutSection.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  const productsSection = document.getElementById('products');
+                  productsSection?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
             >
               Learn More
             </Button>
