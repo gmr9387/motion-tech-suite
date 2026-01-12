@@ -66,7 +66,60 @@ export interface Product {
   originalPrice?: number;
   isNew?: boolean;
   isBestseller?: boolean;
+  stock?: number;
 }
+
+// Mock reviews data for product detail pages
+export interface Review {
+  id: string;
+  author: string;
+  rating: number;
+  date: string;
+  title: string;
+  content: string;
+  verified: boolean;
+}
+
+export const mockReviews: Record<string, Review[]> = {
+  default: [
+    {
+      id: "r1",
+      author: "Sarah M.",
+      rating: 5,
+      date: "2024-01-15",
+      title: "Exactly what I needed!",
+      content: "Amazing quality and fast shipping. The product exceeded my expectations.",
+      verified: true
+    },
+    {
+      id: "r2",
+      author: "James K.",
+      rating: 4,
+      date: "2024-01-10",
+      title: "Great value for money",
+      content: "Good build quality and works as advertised. Would recommend to others.",
+      verified: true
+    },
+    {
+      id: "r3",
+      author: "Emily R.",
+      rating: 5,
+      date: "2024-01-05",
+      title: "Perfect addition to my setup",
+      content: "Love the design and functionality. It integrates seamlessly with my other devices.",
+      verified: false
+    },
+    {
+      id: "r4",
+      author: "Michael T.",
+      rating: 4,
+      date: "2023-12-28",
+      title: "Solid product",
+      content: "Does exactly what it says. Minor packaging issues but product itself is great.",
+      verified: true
+    }
+  ]
+};
 
 export const products: Product[] = [
   // Mobile Tech
@@ -84,7 +137,8 @@ export const products: Product[] = [
     colors: ["Black", "Silver", "Midnight Blue"],
     rating: 4.8,
     reviewCount: 342,
-    isBestseller: true
+    isBestseller: true,
+    stock: 45
   },
   {
     handle: "novalink-usb-c-fast-cable",
@@ -101,7 +155,8 @@ export const products: Product[] = [
     colors: ["Black", "White", "Space Gray"],
     sizes: ["3ft", "6ft", "10ft"],
     rating: 4.6,
-    reviewCount: 891
+    reviewCount: 891,
+    stock: 3
   },
   {
     handle: "skycharge-20w-mini-power-brick",
@@ -116,7 +171,8 @@ export const products: Product[] = [
     image: skyChargePowerBrick,
     colors: ["White", "Black", "Gray"],
     rating: 4.7,
-    reviewCount: 567
+    reviewCount: 567,
+    stock: 0
   },
   {
     handle: "magnetic-snap-battery-pack-pro",
@@ -133,7 +189,8 @@ export const products: Product[] = [
     sizes: ["5,000mAh", "10,000mAh", "20,000mAh"],
     rating: 4.9,
     reviewCount: 234,
-    isBestseller: true
+    isBestseller: true,
+    stock: 15
   },
   {
     handle: "luxegrip-anti-slip-phone-case",
@@ -149,7 +206,8 @@ export const products: Product[] = [
     image: luxeGripPhoneCase,
     colors: ["Black", "Navy", "Rose Gold", "White"],
     rating: 4.5,
-    reviewCount: 1203
+    reviewCount: 1203,
+    stock: 87
   },
   {
     handle: "puresound-bluetooth-earbuds",
@@ -165,7 +223,8 @@ export const products: Product[] = [
     colors: ["Black", "White", "Space Gray"],
     rating: 4.7,
     reviewCount: 678,
-    isNew: true
+    isNew: true,
+    stock: 28
   },
   {
     handle: "motionguard-camera-lens-protector",
@@ -179,7 +238,8 @@ export const products: Product[] = [
     margin: "50%",
     image: lensProtector,
     rating: 4.4,
-    reviewCount: 445
+    reviewCount: 445,
+    stock: 156
   },
   {
     handle: "carbonshield-charging-dock",
@@ -194,7 +254,8 @@ export const products: Product[] = [
     image: chargingDock,
     colors: ["Carbon Black", "Silver", "White"],
     rating: 4.8,
-    reviewCount: 312
+    reviewCount: 312,
+    stock: 5
   },
   {
     handle: "halo-glow-wireless-charging-pad",
@@ -210,7 +271,8 @@ export const products: Product[] = [
     image: wirelessChargingPad,
     colors: ["White", "Black", "Rose Gold"],
     rating: 4.6,
-    reviewCount: 523
+    reviewCount: 523,
+    stock: 42
   },
   {
     handle: "titan-power-bank-50k",
@@ -227,7 +289,8 @@ export const products: Product[] = [
     sizes: ["20,000mAh", "30,000mAh", "50,000mAh"],
     rating: 4.9,
     reviewCount: 189,
-    isBestseller: true
+    isBestseller: true,
+    stock: 2
   },
   {
     handle: "starwave-magsafe-car-vent-mount",
