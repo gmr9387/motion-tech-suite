@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { Product } from "@/data/products";
 import { StarRating } from "@/components/StarRating";
+import { StockBadge } from "@/components/StockBadge";
 import { useWishlist } from "@/contexts/WishlistContext";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,7 @@ interface ProductCardProps {
 export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const inWishlist = isInWishlist(product.handle);
+  const isOutOfStock = product.stock === 0;
 
   const handleWishlistClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -30,17 +32,32 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
     : 0;
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50 cursor-pointer" onClick={onClick}>
+    <Card className={cn(
+      "group overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50 cursor-pointer",
+      isOutOfStock && "opacity-75"
+    )} onClick={onClick}>
       <div className="aspect-square bg-muted relative overflow-hidden">
         {product.image ? (
           <img 
             src={product.image} 
             alt={product.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className={cn(
+              "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
+              isOutOfStock && "grayscale"
+            )}
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
             <div className="text-6xl opacity-20">📱</div>
+          </div>
+        )}
+        
+        {/* Out of stock overlay */}
+        {isOutOfStock && (
+          <div className="absolute inset-0 bg-background/50 flex items-center justify-center">
+            <Badge variant="destructive" className="text-sm px-3 py-1">
+              Out of Stock
+            </Badge>
           </div>
         )}
         
@@ -60,6 +77,9 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
             <Badge className="bg-accent text-accent-foreground">
               Bestseller
             </Badge>
+          )}
+          {product.stock !== undefined && product.stock > 0 && product.stock <= 5 && (
+            <StockBadge stock={product.stock} showText={true} />
           )}
         </div>
 

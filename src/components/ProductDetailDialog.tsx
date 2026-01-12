@@ -7,11 +7,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Product, products } from "@/data/products";
+import { Product, products, mockReviews } from "@/data/products";
 import { useToast } from "@/hooks/use-toast";
 import { useCart } from "@/contexts/CartContext";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { ProductCard } from "./ProductCard";
+import { ProductReviews } from "./ProductReviews";
+import { StockBadge } from "./StockBadge";
 
 interface ProductDetailDialogProps {
   product: Product | null;
@@ -42,6 +44,9 @@ export const ProductDetailDialog = ({
   }, [product?.handle]);
 
   if (!product) return null;
+
+  const isOutOfStock = product.stock === 0;
+  const reviews = mockReviews.default;
 
   // Get related products (same category, different product)
   const relatedProducts = products
@@ -108,6 +113,7 @@ export const ProductDetailDialog = ({
                   {tag}
                 </Badge>
               ))}
+              <StockBadge stock={product.stock} />
             </div>
 
             <div>
@@ -195,12 +201,23 @@ export const ProductDetailDialog = ({
                 size="lg"
                 className="w-full"
                 onClick={handleAddToCart}
+                disabled={isOutOfStock}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
-                Add to Cart
+                {isOutOfStock ? "Out of Stock" : "Add to Cart"}
               </Button>
             </div>
           </div>
+        </div>
+
+        {/* Customer Reviews Section */}
+        <div className="mt-8 pt-6 border-t">
+          <h3 className="text-lg font-semibold mb-4">Customer Reviews</h3>
+          <ProductReviews 
+            reviews={reviews} 
+            averageRating={product.rating} 
+            totalReviews={product.reviewCount}
+          />
         </div>
 
         {/* Related Products Section */}
