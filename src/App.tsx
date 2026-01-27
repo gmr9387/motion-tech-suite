@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { CartProvider } from "@/contexts/CartContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { CartDrawer } from "@/components/CartDrawer";
 import Index from "./pages/Index";
 import Checkout from "./pages/Checkout";
@@ -15,6 +16,8 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Shipping from "./pages/Shipping";
 import Returns from "./pages/Returns";
+import Auth from "./pages/Auth";
+import Orders from "./pages/Orders";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,28 +26,32 @@ const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <TooltipProvider>
-          <CartProvider>
-            <WishlistProvider>
-              <BrowserRouter>
-                <Toaster />
-                <Sonner />
-                <CartDrawer />
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
-                  <Route path="/faq" element={<FAQ />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/shipping" element={<Shipping />} />
-                  <Route path="/returns" element={<Returns />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </BrowserRouter>
-            </WishlistProvider>
-          </CartProvider>
-        </TooltipProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            <CartProvider>
+              <WishlistProvider>
+                <BrowserRouter>
+                  <Toaster />
+                  <Sonner />
+                  <CartDrawer />
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/shipping" element={<Shipping />} />
+                    <Route path="/returns" element={<Returns />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/orders" element={<Orders />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </BrowserRouter>
+              </WishlistProvider>
+            </CartProvider>
+          </TooltipProvider>
+        </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </HelmetProvider>
