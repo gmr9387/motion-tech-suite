@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Truck, Shield, CheckCircle } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, CreditCard, Truck, Shield, CheckCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 interface FormErrors {
   email?: string;
@@ -25,9 +27,11 @@ interface FormErrors {
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
+  const [orderId, setOrderId] = useState<string | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
 
   const [formData, setFormData] = useState({
@@ -168,17 +172,72 @@ const Checkout = () => {
 
     setIsProcessing(true);
 
-    // Simulate order processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      // If user is logged in, save order to database
+      if (user) {
+        const shippingAddress = {
+          name: `${formData.firstName} ${formData.lastName}`,
+          street: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zip: formData.zipCode
+        };
 
-    setIsProcessing(false);
-    setOrderComplete(true);
-    clearCart();
+        // Create order
+        const { data: order, error: orderError } = await supabase
+          .from('orders')
+          .insert({
+            user_id: user.id,
+            total_amount: grandTotal,
+            shipping_address: shippingAddress,
+            payment_method: 'card',
+            status: 'processing'
+          })
+          .select()
+          .single();
 
-    toast({
-      title: "Order Confirmed!",
-      description: "Thank you for your purchase. You'll receive a confirmation email shortly.",
-    });
+        if (orderError) throw orderError;
+
+        // Create order items
+        const orderItems = items.map(item => ({
+          order_id: order.id,
+          product_handle: item.product.handle,
+          product_name: item.product.title,
+          product_price: item.product.price,
+          quantity: item.quantity,
+          selected_color: item.selectedColor || null,
+          selected_size: item.selectedSize || null
+        }));
+
+        const { error: itemsError } = await supabase
+          .from('order_items')
+          .insert(orderItems);
+
+        if (itemsError) throw itemsError;
+
+        setOrderId(order.id);
+      }
+
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      setIsProcessing(false);
+      setOrderComplete(true);
+      clearCart();
+
+      toast({
+        title: "Order Confirmed!",
+        description: "Thank you for your purchase. You'll receive a confirmation email shortly.",
+      });
+    } catch (error) {
+      console.error('Checkout error:', error);
+      setIsProcessing(false);
+      toast({
+        title: "Checkout failed",
+        description: "There was an error processing your order. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const shippingCost = totalPrice >= 50 ? 0 : 5.99;
@@ -205,10 +264,20 @@ const Checkout = () => {
           <CardContent className="pt-8 pb-8 space-y-4">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
             <h1 className="text-2xl font-bold">Order Confirmed!</h1>
+            {orderId && (
+              <p className="text-sm text-muted-foreground">
+                Order ID: {orderId.slice(0, 8).toUpperCase()}
+              </p>
+            )}
             <p className="text-muted-foreground">
               Thank you for your purchase. You'll receive a confirmation email with your order details shortly.
             </p>
-            <div className="pt-4">
+            <div className="pt-4 space-y-2">
+              {user && (
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/orders">View My Orders</Link>
+                </Button>
+              )}
               <Button onClick={() => navigate('/')} className="w-full">
                 Continue Shopping
               </Button>

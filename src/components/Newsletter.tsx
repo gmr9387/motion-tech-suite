@@ -1,23 +1,49 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mail, CheckCircle } from "lucide-react";
+import { Mail, CheckCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const emailSchema = z.string().email("Please enter a valid email address").max(255);
 
 export const Newsletter = () => {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim() && email.includes("@")) {
-      setIsSubmitted(true);
-      toast.success("Welcome to the RioShop family!");
-      setEmail("");
-      setTimeout(() => setIsSubmitted(false), 3000);
-    } else {
-      toast.error("Please enter a valid email address");
+    
+    // Validate email
+    const result = emailSchema.safeParse(email);
+    if (!result.success) {
+      toast.error(result.error.errors[0].message);
+      return;
     }
+
+    setIsLoading(true);
+    
+    const { error } = await supabase
+      .from('newsletter_subscribers')
+      .insert({ email: email.toLowerCase().trim() });
+    
+    setIsLoading(false);
+
+    if (error) {
+      if (error.code === '23505') {
+        toast.info("You're already subscribed! Thanks for your enthusiasm.");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+      return;
+    }
+    
+    setIsSubmitted(true);
+    toast.success("Welcome to the RioShop family!");
+    setEmail("");
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
   return (
@@ -41,15 +67,20 @@ export const Newsletter = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="flex-1 h-12"
-            disabled={isSubmitted}
+            disabled={isSubmitted || isLoading}
           />
           <Button 
             type="submit" 
             size="lg" 
             className="h-12 px-8"
-            disabled={isSubmitted}
+            disabled={isSubmitted || isLoading}
           >
-            {isSubmitted ? (
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                Subscribing...
+              </>
+            ) : isSubmitted ? (
               <>
                 <CheckCircle className="w-4 h-4 mr-2" />
                 Subscribed!

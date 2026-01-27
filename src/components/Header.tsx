@@ -1,12 +1,21 @@
 import { useState } from 'react';
-import { ShoppingCart, Search, Menu, X, Heart, Sun, Moon } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Heart, Sun, Moon, User, LogOut, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { categories } from '@/data/products';
 import { cn } from '@/lib/utils';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface HeaderProps {
   onCategorySelect: (category: string) => void;
@@ -24,8 +33,15 @@ export const Header = ({
   const { totalItems, setIsCartOpen } = useCart();
   const { wishlistCount } = useWishlist();
   const { theme, toggleTheme } = useTheme();
+  const { user, profile, signOut } = useAuth();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   const handleCategoryClick = (category: string) => {
     onCategorySelect(category);
@@ -106,12 +122,51 @@ export const Header = ({
               )}
             </Button>
 
+            {/* User Account */}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="hidden sm:flex">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <div className="px-2 py-1.5">
+                    <p className="text-sm font-medium">{profile?.full_name || 'My Account'}</p>
+                    <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/orders" className="flex items-center">
+                      <Package className="mr-2 h-4 w-4" />
+                      My Orders
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/wishlist" className="flex items-center">
+                      <Heart className="mr-2 h-4 w-4" />
+                      Wishlist ({wishlistCount})
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="ghost" size="sm" asChild className="hidden sm:flex">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
+
             {/* Wishlist Button */}
             <Button
               variant="ghost"
               size="icon"
               className="relative hidden sm:flex"
-              onClick={() => window.location.href = '/wishlist'}
+              onClick={() => navigate('/wishlist')}
             >
               <Heart className="h-5 w-5" />
               {wishlistCount > 0 && (
