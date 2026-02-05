@@ -14,6 +14,7 @@ import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { ProductReviews } from "./ProductReviews";
 import { StockBadge } from "./StockBadge";
+ import { ReviewSubmissionForm } from "./ReviewSubmissionForm";
 
 interface ProductDetailDialogProps {
   product: Product | null;
@@ -212,12 +213,15 @@ export const ProductDetailDialog = ({
 
         {/* Customer Reviews Section */}
         <div className="mt-8 pt-6 border-t">
-          <h3 className="text-lg font-semibold mb-4">Customer Reviews</h3>
+           <h3 className="text-lg font-semibold mb-4">Customer Reviews</h3>
+           <ReviewSubmissionForm productHandle={product.handle} />
+           <div className="mt-6">
           <ProductReviews 
             reviews={reviews} 
             averageRating={product.rating} 
             totalReviews={product.reviewCount}
           />
+           </div>
         </div>
 
         {/* Related Products Section */}
