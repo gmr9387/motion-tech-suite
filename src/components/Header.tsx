@@ -142,6 +142,12 @@ export const Header = ({
                       My Orders
                     </Link>
                   </DropdownMenuItem>
+                   <DropdownMenuItem asChild>
+                     <Link to="/account" className="flex items-center">
+                       <User className="mr-2 h-4 w-4" />
+                       My Account
+                     </Link>
+                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link to="/wishlist" className="flex items-center">
                       <Heart className="mr-2 h-4 w-4" />

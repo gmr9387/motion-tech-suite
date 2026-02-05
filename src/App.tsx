@@ -19,6 +19,7 @@ import Returns from "./pages/Returns";
 import Auth from "./pages/Auth";
 import Orders from "./pages/Orders";
 import NotFound from "./pages/NotFound";
+ import Account from "./pages/Account";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
                     <Route path="/returns" element={<Returns />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/orders" element={<Orders />} />
+                     <Route path="/account" element={<Account />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                   </Routes>
