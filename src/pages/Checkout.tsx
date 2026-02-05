@@ -216,6 +216,37 @@ const Checkout = () => {
         if (itemsError) throw itemsError;
 
         setOrderId(order.id);
+         
+         // Send order confirmation email (fire and forget)
+         const emailData = {
+           orderId: order.id,
+           email: formData.email,
+           customerName: `${formData.firstName} ${formData.lastName}`,
+           items: items.map(item => ({
+             product_name: item.product.title,
+             product_price: item.product.price,
+             quantity: item.quantity,
+             selected_color: item.selectedColor,
+             selected_size: item.selectedSize
+           })),
+           shippingAddress,
+           subtotal: totalPrice,
+           shipping: shippingCost,
+           tax: taxAmount,
+           total: grandTotal
+         };
+         
+         supabase.functions.invoke('send-order-confirmation', {
+           body: emailData
+         }).then(response => {
+           if (response.error) {
+             console.error('Failed to send order confirmation email:', response.error);
+           } else {
+             console.log('Order confirmation email sent successfully');
+           }
+         }).catch(err => {
+           console.error('Error invoking email function:', err);
+         });
       }
 
       // Simulate payment processing
