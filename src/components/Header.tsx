@@ -162,7 +162,7 @@ export const Header = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="ghost" size="sm" asChild className="hidden sm:flex">
+              <Button variant="ghost" size="sm" asChild>
                 <Link to="/auth">Sign In</Link>
               </Button>
             )}
