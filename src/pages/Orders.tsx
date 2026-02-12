@@ -8,7 +8,7 @@ import { SEO } from '@/components/SEO';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, Package, ChevronRight, ShoppingBag } from 'lucide-react';
+import { Loader2, Package, ShoppingBag, CheckCircle2, Clock, Truck, PackageCheck, XCircle } from 'lucide-react';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 
@@ -37,6 +37,18 @@ const statusColors: Record<string, string> = {
   shipped: 'bg-purple-500',
   delivered: 'bg-green-500',
   cancelled: 'bg-destructive'
+};
+
+const statusSteps = [
+  { key: 'pending', label: 'Order Placed', icon: Clock },
+  { key: 'processing', label: 'Processing', icon: Package },
+  { key: 'shipped', label: 'Shipped', icon: Truck },
+  { key: 'delivered', label: 'Delivered', icon: PackageCheck },
+];
+
+const getStepIndex = (status: string) => {
+  if (status === 'cancelled') return -1;
+  return statusSteps.findIndex(s => s.key === status);
 };
 
 const Orders = () => {
@@ -134,7 +146,42 @@ const Orders = () => {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="pt-4">
+                  <CardContent className="pt-4 space-y-4">
+                    {/* Order Tracking Timeline */}
+                    {order.status === 'cancelled' ? (
+                      <div className="flex items-center gap-2 text-destructive bg-destructive/10 rounded-lg p-3">
+                        <XCircle className="w-5 h-5" />
+                        <span className="text-sm font-medium">Order Cancelled</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between px-2">
+                        {statusSteps.map((step, i) => {
+                          const currentIdx = getStepIndex(order.status);
+                          const isComplete = i <= currentIdx;
+                          const isCurrent = i === currentIdx;
+                          const Icon = step.icon;
+                          return (
+                            <div key={step.key} className="flex flex-col items-center flex-1 relative">
+                              {i > 0 && (
+                                <div className={`absolute top-4 -left-1/2 w-full h-0.5 ${i <= currentIdx ? 'bg-primary' : 'bg-muted'}`} />
+                              )}
+                              <div className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center ${isComplete ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'} ${isCurrent ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}`}>
+                                {isComplete && i < currentIdx ? (
+                                  <CheckCircle2 className="w-4 h-4" />
+                                ) : (
+                                  <Icon className="w-4 h-4" />
+                                )}
+                              </div>
+                              <span className={`text-xs mt-1 text-center ${isComplete ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
+                                {step.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Order Items */}
                     <div className="space-y-3">
                       {order.order_items?.map((item) => (
                         <div key={item.id} className="flex items-center justify-between py-2 border-b last:border-0">
@@ -153,7 +200,7 @@ const Orders = () => {
                       ))}
                     </div>
                     
-                    <div className="mt-4 pt-4 border-t">
+                    <div className="pt-4 border-t">
                       <p className="text-sm text-muted-foreground">
                         <strong>Shipping to:</strong>{' '}
                         {String(order.shipping_address?.name || '')}, {String(order.shipping_address?.street || '')}, {String(order.shipping_address?.city || '')}, {String(order.shipping_address?.state || '')} {String(order.shipping_address?.zip || '')}

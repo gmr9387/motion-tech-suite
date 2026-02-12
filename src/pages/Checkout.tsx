@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Truck, Shield, CheckCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, CreditCard, Truck, Shield, CheckCircle, Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface FormErrors {
   email?: string;
@@ -29,6 +30,8 @@ const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
@@ -502,72 +505,85 @@ const Checkout = () => {
           {/* Order Summary */}
           <div className="lg:sticky lg:top-24 h-fit">
             <Card>
-              <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+              <CardHeader 
+                className={isMobile ? 'cursor-pointer' : ''}
+                onClick={() => isMobile && setSummaryOpen(!summaryOpen)}
+              >
+                <div className="flex items-center justify-between">
+                  <CardTitle>Order Summary ({items.length} {items.length === 1 ? 'item' : 'items'})</CardTitle>
+                  {isMobile && (
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold">${grandTotal.toFixed(2)}</span>
+                      {summaryOpen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                    </div>
+                  )}
+                </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Items */}
-                <div className="space-y-3">
-                  {items.map((item, index) => (
-                    <div key={index} className="flex gap-3">
-                      <div className="h-16 w-16 rounded-md overflow-hidden bg-muted flex-shrink-0">
-                        {item.product.image && (
-                          <img
-                            src={item.product.image}
-                            alt={item.product.title}
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium line-clamp-1">{item.product.title}</p>
-                        {(item.selectedColor || item.selectedSize) && (
-                          <p className="text-xs text-muted-foreground">
-                            {[item.selectedColor, item.selectedSize].filter(Boolean).join(' / ')}
+              {(!isMobile || summaryOpen) && (
+                <CardContent className="space-y-4">
+                  {/* Items */}
+                  <div className="space-y-3">
+                    {items.map((item, index) => (
+                      <div key={index} className="flex gap-3">
+                        <div className="h-16 w-16 rounded-md overflow-hidden bg-muted flex-shrink-0">
+                          {item.product.image && (
+                            <img
+                              src={item.product.image}
+                              alt={item.product.title}
+                              className="h-full w-full object-cover"
+                            />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium line-clamp-1">{item.product.title}</p>
+                          {(item.selectedColor || item.selectedSize) && (
+                            <p className="text-xs text-muted-foreground">
+                              {[item.selectedColor, item.selectedSize].filter(Boolean).join(' / ')}
+                            </p>
+                          )}
+                          <p className="text-sm">
+                            Qty: {item.quantity} × ${item.product.price.toFixed(2)}
                           </p>
-                        )}
-                        <p className="text-sm">
-                          Qty: {item.quantity} × ${item.product.price.toFixed(2)}
+                        </div>
+                        <p className="text-sm font-medium">
+                          ${(item.product.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
-                      <p className="text-sm font-medium">
-                        ${(item.product.price * item.quantity).toFixed(2)}
-                      </p>
+                    ))}
+                  </div>
+
+                  <Separator />
+
+                  {/* Totals */}
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span>${totalPrice.toFixed(2)}</span>
                     </div>
-                  ))}
-                </div>
-
-                <Separator />
-
-                {/* Totals */}
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Shipping</span>
+                      <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Tax</span>
+                      <span>${taxAmount.toFixed(2)}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
+
+                  <Separator />
+
+                  <div className="flex justify-between text-lg font-semibold">
+                    <span>Total</span>
+                    <span>${grandTotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Tax</span>
-                    <span>${taxAmount.toFixed(2)}</span>
-                  </div>
-                </div>
 
-                <Separator />
-
-                <div className="flex justify-between text-lg font-semibold">
-                  <span>Total</span>
-                  <span>${grandTotal.toFixed(2)}</span>
-                </div>
-
-                {totalPrice < 50 && (
-                  <p className="text-sm text-muted-foreground text-center">
-                    Add ${(50 - totalPrice).toFixed(2)} more for free shipping!
-                  </p>
-                )}
-              </CardContent>
+                  {totalPrice < 50 && (
+                    <p className="text-sm text-muted-foreground text-center">
+                      Add ${(50 - totalPrice).toFixed(2)} more for free shipping!
+                    </p>
+                  )}
+                </CardContent>
+              )}
             </Card>
           </div>
         </div>
