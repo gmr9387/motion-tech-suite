@@ -230,33 +230,52 @@ export const ProductDetailDialog = ({
             <h3 className="text-lg font-semibold mb-4">Related Products</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {relatedProducts.map((relatedProduct) => (
-                <button
+                <div
                   key={relatedProduct.handle}
-                  className="group text-left rounded-lg border border-border/50 overflow-hidden hover:shadow-md transition-all duration-200 bg-card"
-                  onClick={() => handleRelatedProductClick(relatedProduct)}
+                  className="group rounded-lg border border-border/50 overflow-hidden hover:shadow-md transition-all duration-200 bg-card"
                 >
-                  <div className="aspect-square bg-muted overflow-hidden">
-                    {relatedProduct.image ? (
-                      <img
-                        src={relatedProduct.image}
-                        alt={relatedProduct.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
-                        <span className="text-3xl opacity-20">📱</span>
-                      </div>
-                    )}
+                  <button
+                    className="w-full text-left"
+                    onClick={() => handleRelatedProductClick(relatedProduct)}
+                  >
+                    <div className="aspect-square bg-muted overflow-hidden">
+                      {relatedProduct.image ? (
+                        <img
+                          src={relatedProduct.image}
+                          alt={relatedProduct.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center">
+                          <span className="text-3xl opacity-20">📱</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="px-2.5 pt-2.5 space-y-1">
+                      <p className="text-sm font-medium leading-tight line-clamp-1 group-hover:text-primary transition-colors">
+                        {relatedProduct.title}
+                      </p>
+                      <p className="text-sm font-bold text-primary">
+                        ${relatedProduct.price.toFixed(2)}
+                      </p>
+                    </div>
+                  </button>
+                  <div className="px-2.5 pb-2.5 pt-1.5">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full h-7 text-xs"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(relatedProduct, 1);
+                        toast({ title: `${relatedProduct.title} added to cart` });
+                      }}
+                    >
+                      <ShoppingCart className="h-3 w-3 mr-1" />
+                      Add to Cart
+                    </Button>
                   </div>
-                  <div className="p-2.5 space-y-1">
-                    <p className="text-sm font-medium leading-tight line-clamp-1 group-hover:text-primary transition-colors">
-                      {relatedProduct.title}
-                    </p>
-                    <p className="text-sm font-bold text-primary">
-                      ${relatedProduct.price.toFixed(2)}
-                    </p>
-                  </div>
-                </button>
+                </div>
               ))}
             </div>
           </div>
