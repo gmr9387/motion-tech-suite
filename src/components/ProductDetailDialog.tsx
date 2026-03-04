@@ -30,7 +30,7 @@ export const ProductDetailDialog = ({
   onProductSelect,
 }: ProductDetailDialogProps) => {
   const { toast } = useToast();
-  const { addToCart, setIsCartOpen } = useCart();
+  const { addToCart, setIsCartOpen, items } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -261,19 +261,24 @@ export const ProductDetailDialog = ({
                     </div>
                   </button>
                   <div className="px-2.5 pb-2.5 pt-1.5">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full h-7 text-xs"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(relatedProduct, 1);
-                        toast({ title: `${relatedProduct.title} added to cart` });
-                      }}
-                    >
-                      <ShoppingCart className="h-3 w-3 mr-1" />
-                      Add to Cart
-                    </Button>
+                    {(() => {
+                      const inCartQty = items.filter(i => i.product.handle === relatedProduct.handle).reduce((sum, i) => sum + i.quantity, 0);
+                      return (
+                        <Button
+                          size="sm"
+                          variant={inCartQty > 0 ? "default" : "outline"}
+                          className="w-full h-7 text-xs"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(relatedProduct, 1);
+                            toast({ title: `${relatedProduct.title} added to cart` });
+                          }}
+                        >
+                          <ShoppingCart className="h-3 w-3 mr-1" />
+                          {inCartQty > 0 ? `In Cart (${inCartQty})` : "Add to Cart"}
+                        </Button>
+                      );
+                    })()}
                   </div>
                 </div>
               ))}
