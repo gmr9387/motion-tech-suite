@@ -4,6 +4,18 @@ All notable changes to the RioShop project are documented in this file. This pro
 
 ---
 
+## [1.9.0] — 2026-04-07
+
+### Added
+- **Wishlist database sync** — wishlist now persists to the database for logged-in users, with automatic merge of guest localStorage items on login
+- Guest users continue to use localStorage as a seamless fallback
+- Added `loading` state to WishlistContext for async operations
+
+### Changed
+- Refactored `WishlistContext` to use `useCallback` for memoized handlers and hybrid local/remote persistence strategy
+
+---
+
 ## [1.8.0] — 2026-03-04
 
 ### Added
