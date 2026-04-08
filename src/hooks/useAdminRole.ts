@@ -16,11 +16,34 @@ export const useAdminRole = () => {
     }
 
     const checkAdmin = async () => {
-      // Use raw SQL via rpc or direct rest call since user_roles may not be in generated types yet
-      const { data, error } = await supabase
-        .rpc('has_role', { _user_id: user.id, _role: 'admin' });
-
-      setIsAdmin(!error && data === true);
+      try {
+        // Direct PostgREST call to bypass generated types
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+        const session = (await supabase.auth.getSession()).data.session;
+        
+        const res = await fetch(
+          `${supabaseUrl}/rest/v1/rpc/has_role`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': supabaseKey,
+              'Authorization': `Bearer ${session?.access_token || supabaseKey}`,
+            },
+            body: JSON.stringify({ _user_id: user.id, _role: 'admin' }),
+          }
+        );
+        
+        if (res.ok) {
+          const result = await res.json();
+          setIsAdmin(result === true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch {
+        setIsAdmin(false);
+      }
       setLoading(false);
     };
 
