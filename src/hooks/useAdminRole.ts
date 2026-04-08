@@ -16,14 +16,11 @@ export const useAdminRole = () => {
     }
 
     const checkAdmin = async () => {
+      // Use raw SQL via rpc or direct rest call since user_roles may not be in generated types yet
       const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .maybeSingle();
+        .rpc('has_role', { _user_id: user.id, _role: 'admin' });
 
-      setIsAdmin(!error && !!data);
+      setIsAdmin(!error && data === true);
       setLoading(false);
     };
 
