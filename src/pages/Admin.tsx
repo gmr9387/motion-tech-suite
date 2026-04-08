@@ -213,7 +213,7 @@ const Admin = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
                   <div className="p-3 rounded-full bg-yellow-500/10">
-                    <Package className="w-6 h-6 text-yellow-600" />
+                    <Package className="w-6 h-6 text-muted-foreground" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Pending</p>
@@ -226,7 +226,7 @@ const Admin = () => {
               <CardContent className="pt-6">
                 <div className="flex items-center gap-4">
                   <div className="p-3 rounded-full bg-green-500/10">
-                    <Users className="w-6 h-6 text-green-600" />
+                    <Users className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Customers</p>
