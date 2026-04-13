@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export const MegaMenu = () => {
   const [openDept, setOpenDept] = useState<string | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const handleMouseEnter = (slug: string) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
