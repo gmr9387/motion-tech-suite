@@ -21,6 +21,8 @@ import Orders from "./pages/Orders";
 import NotFound from "./pages/NotFound";
 import Account from "./pages/Account";
 import Admin from "./pages/Admin";
+import Department from "./pages/Department";
+import ProductDetail from "./pages/ProductDetail";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,9 @@ const App = () => (
                   <CartDrawer />
                   <Routes>
                     <Route path="/" element={<Index />} />
+                    <Route path="/department/:slug" element={<Department />} />
+                    <Route path="/department/:slug/:subcategory" element={<Department />} />
+                    <Route path="/product/:handle" element={<ProductDetail />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/wishlist" element={<Wishlist />} />
                     <Route path="/faq" element={<FAQ />} />
@@ -46,8 +51,8 @@ const App = () => (
                     <Route path="/returns" element={<Returns />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/orders" element={<Orders />} />
-                     <Route path="/account" element={<Account />} />
-                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/admin" element={<Admin />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
                   </Routes>
