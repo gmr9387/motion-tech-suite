@@ -6,9 +6,10 @@ import { useCart } from '@/contexts/CartContext';
 import { useWishlist } from '@/contexts/WishlistContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { categories } from '@/data/products';
+import { departments } from '@/data/departments';
 import { cn } from '@/lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
+import { MegaMenu } from '@/components/MegaMenu';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,83 +44,42 @@ export const Header = ({
     navigate('/');
   };
 
-  const handleCategoryClick = (category: string) => {
-    onCategorySelect(category);
-    setIsMobileMenuOpen(false);
-    // Scroll to products section
-    const productsSection = document.getElementById('products');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
       <div className="container mx-auto px-4">
+        {/* Top bar */}
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <a href="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 shrink-0">
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
               RioShop
             </span>
-          </a>
+          </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant="ghost"
-                size="sm"
-                onClick={() => handleCategoryClick(category)}
-                className={cn(
-                  "text-muted-foreground hover:text-foreground transition-colors",
-                  selectedCategory === category && "text-primary font-semibold"
-                )}
-              >
-                {category}
-              </Button>
-            ))}
-          </nav>
-
-          {/* Search & Cart */}
-          <div className="flex items-center space-x-2">
-            {/* Desktop Search */}
-            <div className="hidden md:flex items-center">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  className="pl-10 w-64 h-9"
-                />
-              </div>
+          {/* Desktop Search (center) */}
+          <div className="hidden md:flex items-center flex-1 max-w-md mx-6">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="pl-10 w-full h-9"
+              />
             </div>
+          </div>
 
+          {/* Right actions */}
+          <div className="flex items-center space-x-1 sm:space-x-2">
             {/* Mobile Search Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-            >
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Search className="h-5 w-5" />
             </Button>
 
             {/* Theme Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="hidden sm:flex"
-            >
-              {theme === 'light' ? (
-                <Moon className="h-5 w-5" />
-              ) : (
-                <Sun className="h-5 w-5" />
-              )}
+            <Button variant="ghost" size="icon" onClick={toggleTheme} className="hidden sm:flex">
+              {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </Button>
 
             {/* User Account */}
@@ -137,27 +97,17 @@ export const Header = ({
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/orders" className="flex items-center">
-                      <Package className="mr-2 h-4 w-4" />
-                      My Orders
-                    </Link>
+                    <Link to="/orders" className="flex items-center"><Package className="mr-2 h-4 w-4" />My Orders</Link>
                   </DropdownMenuItem>
-                   <DropdownMenuItem asChild>
-                     <Link to="/account" className="flex items-center">
-                       <User className="mr-2 h-4 w-4" />
-                       My Account
-                     </Link>
-                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/wishlist" className="flex items-center">
-                      <Heart className="mr-2 h-4 w-4" />
-                      Wishlist ({wishlistCount})
-                    </Link>
+                    <Link to="/account" className="flex items-center"><User className="mr-2 h-4 w-4" />My Account</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/wishlist" className="flex items-center"><Heart className="mr-2 h-4 w-4" />Wishlist ({wishlistCount})</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
+                    <LogOut className="mr-2 h-4 w-4" />Sign Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -167,82 +117,90 @@ export const Header = ({
               </Button>
             )}
 
-            {/* Wishlist Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative hidden sm:flex"
-              onClick={() => navigate('/wishlist')}
-            >
+            {/* Wishlist */}
+            <Button variant="ghost" size="icon" className="relative hidden sm:flex" onClick={() => navigate('/wishlist')}>
               <Heart className="h-5 w-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs font-bold flex items-center justify-center">
-                  {wishlistCount}
-                </span>
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs font-bold flex items-center justify-center">{wishlistCount}</span>
               )}
             </Button>
 
-            {/* Cart Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative"
-              onClick={() => setIsCartOpen(true)}
-            >
+            {/* Cart */}
+            <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
               <ShoppingCart className="h-5 w-5" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-accent text-accent-foreground text-xs font-bold flex items-center justify-center">
-                  {totalItems > 99 ? '99+' : totalItems}
-                </span>
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-accent text-accent-foreground text-xs font-bold flex items-center justify-center">{totalItems > 99 ? '99+' : totalItems}</span>
               )}
             </Button>
 
-            {/* Mobile Menu Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
+            {/* Mobile Menu */}
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Search Bar */}
+        {/* Mega Menu (desktop) */}
+        <div className="hidden lg:block border-t border-border/50 -mx-4 px-4">
+          <MegaMenu />
+        </div>
+
+        {/* Mobile Search */}
         {isSearchOpen && (
           <div className="md:hidden py-3 border-t border-border">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-10 w-full"
-                autoFocus
-              />
+              <Input type="search" placeholder="Search products..." value={searchQuery} onChange={(e) => onSearchChange(e.target.value)} className="pl-10 w-full" autoFocus />
             </div>
           </div>
         )}
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-border">
+          <nav className="lg:hidden py-4 border-t border-border max-h-[70vh] overflow-y-auto">
             <div className="flex flex-col space-y-1">
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant="ghost"
-                  onClick={() => handleCategoryClick(category)}
-                  className={cn(
-                    "justify-start text-muted-foreground hover:text-foreground",
-                    selectedCategory === category && "text-primary font-semibold bg-primary/5"
-                  )}
-                >
-                  {category}
-                </Button>
+              {departments.map((dept) => (
+                <div key={dept.slug}>
+                  <Link
+                    to={`/department/${dept.slug}`}
+                    className="flex items-center gap-2 px-3 py-2.5 text-sm font-semibold text-foreground hover:bg-muted rounded-md"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span>{dept.icon}</span>
+                    {dept.name}
+                  </Link>
+                  <div className="pl-8 flex flex-col">
+                    {dept.subcategories.map((sub) => (
+                      <Link
+                        key={sub.slug}
+                        to={`/department/${dept.slug}/${sub.slug}`}
+                        className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted rounded-md"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {sub.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
+
+              {/* Mobile-only links */}
+              <div className="border-t border-border pt-2 mt-2">
+                <Button variant="ghost" size="sm" className="w-full justify-start" onClick={toggleTheme}>
+                  {theme === 'light' ? <Moon className="mr-2 h-4 w-4" /> : <Sun className="mr-2 h-4 w-4" />}
+                  {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+                </Button>
+                {user && (
+                  <>
+                    <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                      <Link to="/account" onClick={() => setIsMobileMenuOpen(false)}><User className="mr-2 h-4 w-4" />Account</Link>
+                    </Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start" asChild>
+                      <Link to="/wishlist" onClick={() => setIsMobileMenuOpen(false)}><Heart className="mr-2 h-4 w-4" />Wishlist ({wishlistCount})</Link>
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </nav>
         )}

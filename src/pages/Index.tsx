@@ -1,14 +1,18 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { ProductCard } from "@/components/ProductCard";
-import { CategoryFilter } from "@/components/CategoryFilter";
 import { ProductDetailDialog } from "@/components/ProductDetailDialog";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Newsletter } from "@/components/Newsletter";
 import { ProductSorting, SortOption } from "@/components/ProductSorting";
+import { CategoryFilter } from "@/components/CategoryFilter";
 import { SEO } from "@/components/SEO";
 import { products, categories, Product } from "@/data/products";
+import { departments } from "@/data/departments";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -17,55 +21,44 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState<SortOption>("featured");
 
+  const featuredProducts = useMemo(() => {
+    return products.filter((p) => p.isBestseller).slice(0, 8);
+  }, []);
+
+  const newProducts = useMemo(() => {
+    return products.filter((p) => p.isNew).slice(0, 8);
+  }, []);
+
   const filteredProducts = useMemo(() => {
     let result = products;
-
-    // Filter by category
     if (selectedCategory !== "All") {
-      result = result.filter(product => product.category === selectedCategory);
+      result = result.filter((p) => p.category === selectedCategory);
     }
-
-    // Filter by search query
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      result = result.filter(product =>
-        product.title.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.tags.some(tag => tag.toLowerCase().includes(query)) ||
-        product.category.toLowerCase().includes(query)
+      const q = searchQuery.toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.tags.some((t) => t.toLowerCase().includes(q)) ||
+          p.category.toLowerCase().includes(q)
       );
     }
-
-    // Sort products
     switch (sortOption) {
-      case "price-low":
-        result = [...result].sort((a, b) => a.price - b.price);
-        break;
-      case "price-high":
-        result = [...result].sort((a, b) => b.price - a.price);
-        break;
-      case "rating":
-        result = [...result].sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        break;
-      case "newest":
-        result = [...result].sort((a, b) => {
-          if (a.isNew && !b.isNew) return -1;
-          if (!a.isNew && b.isNew) return 1;
-          return 0;
-        });
-        break;
-      case "featured":
-      default:
-        result = [...result].sort((a, b) => {
-          if (a.isBestseller && !b.isBestseller) return -1;
-          if (!a.isBestseller && b.isBestseller) return 1;
-          return 0;
-        });
-        break;
+      case "price-low": return [...result].sort((a, b) => a.price - b.price);
+      case "price-high": return [...result].sort((a, b) => b.price - a.price);
+      case "rating": return [...result].sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case "newest": return [...result].sort((a, b) => (a.isNew ? -1 : 0) - (b.isNew ? -1 : 0));
+      default: return [...result].sort((a, b) => (a.isBestseller ? -1 : 0) - (b.isBestseller ? -1 : 0));
     }
-
-    return result;
   }, [selectedCategory, searchQuery, sortOption]);
+
+  const showFullCatalog = selectedCategory !== "All" || searchQuery.trim();
+
+  const openProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setIsDialogOpen(true);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -76,82 +69,102 @@ const Index = () => {
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
-      
+
       <main className="flex-1">
         <Hero />
-        
-        <section id="products" className="py-20 px-4 bg-background">
-          <div className="container mx-auto">
-            <div className="text-center space-y-4 mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold">
-                Explore Our Collection
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Premium tech for the modern mover. Every product designed with precision and style.
-              </p>
-            </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-              <CategoryFilter
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-              />
-              <ProductSorting value={sortOption} onChange={setSortOption} />
-            </div>
-
-            {searchQuery && (
-              <p className="text-sm text-muted-foreground mb-6">
-                {filteredProducts.length} result{filteredProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
-              </p>
-            )}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
-                <div 
-                  key={product.handle}
-                  className="animate-in fade-in slide-in-from-bottom-4 duration-500"
-                >
-                  <ProductCard 
-                    product={product}
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      setIsDialogOpen(true);
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-            
-            <ProductDetailDialog
-              product={selectedProduct}
-              open={isDialogOpen}
-              onOpenChange={setIsDialogOpen}
-              onProductSelect={(product) => {
-                setSelectedProduct(product);
-              }}
-            />
-
-            {filteredProducts.length === 0 && (
-              <div className="text-center py-20">
-                <p className="text-xl text-muted-foreground">
-                  {searchQuery 
-                    ? `No products found for "${searchQuery}"`
-                    : "No products found in this category."
-                  }
-                </p>
+        {/* Shop by Department */}
+        {!showFullCatalog && (
+          <section className="py-16 px-4 bg-background">
+            <div className="container mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Shop by Department</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+                {departments.map((dept) => (
+                  <Link
+                    key={dept.slug}
+                    to={`/department/${dept.slug}`}
+                    className="group flex flex-col items-center gap-3 p-6 rounded-xl border border-border bg-card hover:border-primary/50 hover:shadow-lg transition-all duration-300"
+                  >
+                    <span className="text-4xl group-hover:scale-110 transition-transform">{dept.icon}</span>
+                    <span className="text-sm font-semibold text-center group-hover:text-primary transition-colors">{dept.name}</span>
+                  </Link>
+                ))}
               </div>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
+
+        {/* Bestsellers */}
+        {!showFullCatalog && (
+          <section className="py-16 px-4 bg-muted/30">
+            <div className="container mx-auto">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold">Bestsellers</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {featuredProducts.map((product) => (
+                  <ProductCard key={product.handle} product={product} onClick={() => openProduct(product)} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* New Arrivals */}
+        {!showFullCatalog && newProducts.length > 0 && (
+          <section className="py-16 px-4 bg-background">
+            <div className="container mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold mb-8">New Arrivals</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {newProducts.map((product) => (
+                  <ProductCard key={product.handle} product={product} onClick={() => openProduct(product)} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Full catalog (when filtered/searched) */}
+        {showFullCatalog && (
+          <section id="products" className="py-12 px-4 bg-background">
+            <div className="container mx-auto">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <CategoryFilter categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
+                <ProductSorting value={sortOption} onChange={setSortOption} />
+              </div>
+              {searchQuery && (
+                <p className="text-sm text-muted-foreground mb-6">
+                  {filteredProducts.length} result{filteredProducts.length !== 1 ? "s" : ""} for "{searchQuery}"
+                </p>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.handle} product={product} onClick={() => openProduct(product)} />
+                ))}
+              </div>
+              {filteredProducts.length === 0 && (
+                <div className="text-center py-20">
+                  <p className="text-xl text-muted-foreground">
+                    {searchQuery ? `No products found for "${searchQuery}"` : "No products found in this category."}
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        <ProductDetailDialog
+          product={selectedProduct}
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+          onProductSelect={setSelectedProduct}
+        />
 
         <Newsletter />
 
         <section className="py-20 px-4 bg-gradient-to-br from-primary to-primary-glow text-white">
           <div className="container mx-auto text-center space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Ready to Move Forward?
-            </h2>
+            <h2 className="text-4xl md:text-5xl font-bold">Ready to Move Forward?</h2>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
               Join thousands who trust RioShop for their tech lifestyle.
             </p>
