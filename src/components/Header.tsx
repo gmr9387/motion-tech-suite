@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Sun, Moon, User, LogOut, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { departments } from '@/data/departments';
 import { cn } from '@/lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { MegaMenu } from '@/components/MegaMenu';
+import { GlobalSearch } from '@/components/GlobalSearch';
 import {
   DropdownMenu,
   DropdownMenuContent,
