@@ -1,11 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Heart } from "lucide-react";
+import { Heart, GitCompare } from "lucide-react";
 import { Product } from "@/data/products";
 import { StarRating } from "@/components/StarRating";
 import { StockBadge } from "@/components/StockBadge";
 import { useWishlist } from "@/contexts/WishlistContext";
+import { useCompare } from "@/contexts/CompareContext";
 import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
@@ -15,7 +16,9 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, onClick }: ProductCardProps) => {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { isInCompare, add: addCompare, remove: removeCompare } = useCompare();
   const inWishlist = isInWishlist(product.handle);
+  const inCompare = isInCompare(product.handle);
   const isOutOfStock = product.stock === 0;
 
   const handleWishlistClick = (e: React.MouseEvent) => {
@@ -25,6 +28,12 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
     } else {
       addToWishlist(product);
     }
+  };
+
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (inCompare) removeCompare(product.handle);
+    else addCompare(product);
   };
 
   const discountPercentage = product.originalPrice 
@@ -83,17 +92,32 @@ export const ProductCard = ({ product, onClick }: ProductCardProps) => {
           )}
         </div>
 
-        {/* Wishlist button */}
-        <button
-          onClick={handleWishlistClick}
-          className={cn(
-            "absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200",
-            "bg-background/80 backdrop-blur-sm hover:bg-background",
-            inWishlist && "text-destructive"
-          )}
-        >
-          <Heart className={cn("w-5 h-5", inWishlist && "fill-current")} />
-        </button>
+        {/* Action buttons */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1.5">
+          <button
+            onClick={handleWishlistClick}
+            aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+            className={cn(
+              "w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200",
+              "bg-background/80 backdrop-blur-sm hover:bg-background",
+              inWishlist && "text-destructive"
+            )}
+          >
+            <Heart className={cn("w-5 h-5", inWishlist && "fill-current")} />
+          </button>
+          <button
+            onClick={handleCompareClick}
+            aria-label={inCompare ? "Remove from compare" : "Add to compare"}
+            title={inCompare ? "Remove from compare" : "Add to compare"}
+            className={cn(
+              "w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200",
+              "bg-background/80 backdrop-blur-sm hover:bg-background",
+              inCompare && "text-primary bg-primary/10"
+            )}
+          >
+            <GitCompare className="w-4 h-4" />
+          </button>
+        </div>
       </div>
       
       <CardContent className="p-5 space-y-3">
