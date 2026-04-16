@@ -36,8 +36,8 @@ const Compare = () => {
       render: (p) =>
         p.stock === undefined ? "—" :
         p.stock === 0 ? <span className="text-destructive">Out of stock</span> :
-        p.stock < 10 ? <span className="text-amber-500">Low ({p.stock})</span> :
-        <span className="text-green-600">In stock</span>,
+        p.stock < 10 ? <span className="text-accent-foreground">Low ({p.stock})</span> :
+        <span className="text-primary">In stock</span>,
     },
     { label: "Colors", render: (p) => p.colors?.join(", ") || "—" },
     { label: "Sizes", render: (p) => p.sizes?.join(", ") || "—" },
