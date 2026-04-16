@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Sun, Moon, User, LogOut, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { departments } from '@/data/departments';
 import { cn } from '@/lib/utils';
 import { Link, useNavigate } from 'react-router-dom';
 import { MegaMenu } from '@/components/MegaMenu';
+import { GlobalSearch } from '@/components/GlobalSearch';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,7 +38,7 @@ export const Header = ({
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [globalSearchOpen, setGlobalSearchOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut();
@@ -56,24 +57,28 @@ export const Header = ({
             </span>
           </Link>
 
-          {/* Desktop Search (center) */}
+          {/* Desktop Search trigger (center) */}
           <div className="hidden md:flex items-center flex-1 max-w-md mx-6">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-10 w-full h-9"
-              />
-            </div>
+            <button
+              type="button"
+              onClick={() => setGlobalSearchOpen(true)}
+              className="relative w-full h-9 flex items-center text-left rounded-md border border-input bg-background hover:bg-muted/50 transition-colors px-3"
+              aria-label="Search products"
+            >
+              <Search className="h-4 w-4 text-muted-foreground mr-2 shrink-0" />
+              <span className="text-sm text-muted-foreground flex-1 truncate">
+                Search products...
+              </span>
+              <kbd className="hidden lg:inline-flex pointer-events-none ml-2 h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </button>
           </div>
 
           {/* Right actions */}
           <div className="flex items-center space-x-1 sm:space-x-2">
             {/* Mobile Search Toggle */}
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setGlobalSearchOpen(true)}>
               <Search className="h-5 w-5" />
             </Button>
 
@@ -145,15 +150,7 @@ export const Header = ({
           <MegaMenu />
         </div>
 
-        {/* Mobile Search */}
-        {isSearchOpen && (
-          <div className="md:hidden py-3 border-t border-border">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search products..." value={searchQuery} onChange={(e) => onSearchChange(e.target.value)} className="pl-10 w-full" autoFocus />
-            </div>
-          </div>
-        )}
+        <GlobalSearch open={globalSearchOpen} onOpenChange={setGlobalSearchOpen} />
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
